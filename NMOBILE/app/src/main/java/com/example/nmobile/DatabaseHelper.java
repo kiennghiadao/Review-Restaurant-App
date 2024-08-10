@@ -319,26 +319,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1; // Trả về true nếu thêm thành công, false nếu không thành công
     }
 
-    // Lấy tất cả yêu cầu đặt lại mật khẩu
-    public Cursor getAllPasswordResetRequests() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_PASSWORD_RESET_REQUESTS, null, null, null, null, null, null);
-    }
-
-    // Lấy yêu cầu đặt lại mật khẩu bằng email
-    public Cursor getPasswordResetRequestsByEmail(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_PASSWORD_RESET_REQUESTS, null, COLUMN_REQUEST_EMAIL + "=?", new String[]{email}, null, null, null);
-    }
-
-    // Cập nhật trạng thái yêu cầu đặt lại mật khẩu
-    public boolean updatePasswordResetRequestStatus(int requestId, String status) {
+    // Xóa yêu cầu đặt lại mật khẩu theo email sau khi admin đã đổi pass
+    public boolean deletePasswordResetRequest(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_REQUEST_STATUS, status);
-
-        int result = db.update(TABLE_PASSWORD_RESET_REQUESTS, contentValues, COLUMN_REQUEST_ID + "=?", new String[]{String.valueOf(requestId)});
+        int rowsAffected = db.delete(TABLE_PASSWORD_RESET_REQUESTS, COLUMN_REQUEST_EMAIL + "=?", new String[]{email});
         db.close();
-        return result > 0;
+        return rowsAffected > 0; // Trả về true nếu có ít nhất một hàng bị xóa
     }
 }
