@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile Options"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:padding="16dp"></TextView>
+
+    <Button
+        android:id="@+id/view_review_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xem lịch sử review"
+        android:padding="16dp"
+        />
+
+    <Button
+        android:id="@+id/view_visited_restaurants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Xem quán đã xem"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Đăng xuất"
+        android:padding="16dp"/>
+
+    <!-- Admin-only buttons -->
+    <Button
+        android:id="@+id/manage_users"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý User"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/manage_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý danh mục"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/manage_restaurants"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý quán ăn"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+    <Button
+        android:id="@+id/manage_reviews"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Quản lý đánh giá"
+        android:visibility="gone"
+        android:padding="16dp"/>
+
+</LinearLayout>

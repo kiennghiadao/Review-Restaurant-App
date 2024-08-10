@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/email_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/password_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:layout_below="@id/email_input"
+        android:layout_marginBottom="8dp" />
+
+    <EditText
+        android:id="@+id/role_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Role"
+        android:layout_below="@id/password_input"
+        android:layout_marginBottom="16dp" />
+
+    <Button
+        android:id="@+id/add_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Thêm User"
+        android:layout_below="@id/role_input"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/edit_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chỉnh Sửa User"
+        android:layout_below="@id/delete_user_button"
+        />
+
+    <Button
+        android:id="@+id/delete_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Xóa User"
+        android:layout_below="@id/add_user_button"
+        />
+
+    <Button
+        android:id="@+id/view_user_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hiện User List"
+        android:layout_below="@id/role_input"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/request_password_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hiện Reset Password List"
+        android:layout_below="@id/view_user_button"
+        android:layout_alignParentEnd="true" />
+
+    <!-- ListView for managing users -->
+    <ListView
+        android:id="@+id/users_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edit_user_button"
+        android:layout_marginTop="16dp" />
+
+    <!-- ListView for password reset requests -->
+    <ListView
+        android:id="@+id/requests_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/users_list_view"
+        android:layout_marginTop="16dp" />
+</RelativeLayout>
