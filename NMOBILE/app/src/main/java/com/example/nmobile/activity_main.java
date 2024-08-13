@@ -93,6 +93,12 @@ public class activity_main extends AppCompatActivity {
         dialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadRestaurants(); // Tải lại danh sách quán ăn từ cơ sở dữ liệu
+    }
+
     private void loadRestaurants() {
         Cursor cursor = dbHelper.getAllRestaurants();
         adapter = new RestaurantAdapter(this, cursor);

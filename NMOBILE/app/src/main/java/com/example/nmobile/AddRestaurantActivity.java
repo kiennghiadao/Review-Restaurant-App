@@ -1,19 +1,21 @@
 package com.example.nmobile;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Toast;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.reflect.Field;
-import android.app.AlertDialog;
 
 public class AddRestaurantActivity extends AppCompatActivity {
 
@@ -25,7 +27,8 @@ public class AddRestaurantActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button addButton;
     private Button chooseImageButton;
-
+    private Button deleteButton;
+    private Button updateButton;
     private int selectedImageResId = -1; // Khởi tạo với giá trị mặc định để tránh lỗi
 
     @Override
@@ -42,12 +45,65 @@ public class AddRestaurantActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         addButton = findViewById(R.id.buttonAddRestaurant);
         chooseImageButton = findViewById(R.id.buttonAddImage);
+        deleteButton = findViewById(R.id.buttonDeleteRestaurant);
+        updateButton = findViewById(R.id.buttonUpdateRestaurant);
 
         // Xử lý sự kiện nút chọn hình ảnh
         chooseImageButton.setOnClickListener(v -> showImagePicker());
 
+        // Xử lý sự kiện nút xóa nhà hàng
+        deleteButton.setOnClickListener(v -> deleteRestaurant());
+
         // Xử lý sự kiện nút thêm nhà hàng
         addButton.setOnClickListener(v -> addRestaurant());
+
+        // Xử lý sự kiện nút chỉnh sửa nhà hàng
+        updateButton.setOnClickListener(v -> updateRestaurant());
+    }
+
+    private void deleteRestaurant() {
+        String name = nameEditText.getText().toString();
+
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        int rowsDeleted = db.delete(DatabaseHelper.TABLE_RESTAURANTS, DatabaseHelper.COLUMN_RESTAURANT_NAME + "=?", new String[]{name});
+
+        if (rowsDeleted > 0) {
+            Toast.makeText(this, "Restaurant deleted", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Can't find restaurant", Toast.LENGTH_SHORT).show();
+        }
+
+        db.close();
+    }
+
+    private void updateRestaurant() {
+        String name = nameEditText.getText().toString();
+        String location = locationEditText.getText().toString();
+        String type = typeEditText.getText().toString();
+        String details = detailsEditText.getText().toString();
+        float rating = ratingBar.getRating();
+
+        // Khởi tạo DatabaseHelper và ContentValues
+        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        ContentValues contentValues = new ContentValues();
+        if (!location.isEmpty()) contentValues.put(DatabaseHelper.COLUMN_LOCATION, location);
+        if (!type.isEmpty()) contentValues.put(DatabaseHelper.COLUMN_TYPE, type);
+        if (!details.isEmpty()) contentValues.put(DatabaseHelper.COLUMN_DETAILS, details);
+        if (rating >= 0) contentValues.put(DatabaseHelper.COLUMN_RESTAURANT_RATING, rating);
+        if (selectedImageResId != -1) contentValues.put(DatabaseHelper.COLUMN_IMAGE_URL, selectedImageResId);
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int rowsAffected = db.update(DatabaseHelper.TABLE_RESTAURANTS, contentValues,
+                DatabaseHelper.COLUMN_RESTAURANT_NAME + "=?", new String[]{name});
+
+        if (rowsAffected > 0) {
+            Toast.makeText(this, "Restaurant updated successfully", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(this, "Error updating restaurant", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void showImagePicker() {
@@ -82,7 +138,6 @@ public class AddRestaurantActivity extends AppCompatActivity {
         String details = detailsEditText.getText().toString();
         float rating = ratingBar.getRating();
 
-        // Khởi tạo DatabaseHelper và ContentValues
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseHelper.COLUMN_RESTAURANT_NAME, name);
@@ -92,16 +147,13 @@ public class AddRestaurantActivity extends AppCompatActivity {
         contentValues.put(DatabaseHelper.COLUMN_RESTAURANT_RATING, rating);
         contentValues.put(DatabaseHelper.COLUMN_IMAGE_URL, selectedImageResId);
 
-        // Thêm nhà hàng vào cơ sở dữ liệu
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         long result = db.insert(DatabaseHelper.TABLE_RESTAURANTS, null, contentValues);
 
         if (result != -1) {
-            // Hiển thị thông báo thành công và đóng Activity
             Toast.makeText(this, "Restaurant added successfully", Toast.LENGTH_SHORT).show();
-            finish(); // Đóng AddRestaurantActivity và quay lại activity trước
+            finish();
         } else {
-            // Hiển thị thông báo lỗi
             Toast.makeText(this, "Error adding restaurant", Toast.LENGTH_SHORT).show();
         }
     }

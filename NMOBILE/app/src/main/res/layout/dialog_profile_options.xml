@@ -17,7 +17,7 @@
         android:id="@+id/view_review_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xem lịch sử review"
+        android:text="View reviews history"
         android:padding="16dp"
         />
 
@@ -25,14 +25,14 @@
         android:id="@+id/view_visited_restaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Xem quán đã xem"
+        android:text="View checked restaurant"
         android:padding="16dp"/>
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Đăng xuất"
+        android:text="Logout"
         android:padding="16dp"/>
 
     <!-- Admin-only buttons -->
@@ -40,7 +40,7 @@
         android:id="@+id/manage_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quản lý User"
+        android:text="User management"
         android:visibility="gone"
         android:padding="16dp"/>
 
@@ -48,7 +48,7 @@
         android:id="@+id/manage_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quản lý danh mục"
+        android:text="Category management"
         android:visibility="gone"
         android:padding="16dp"/>
 
@@ -56,7 +56,7 @@
         android:id="@+id/manage_restaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quản lý quán ăn"
+        android:text="Restaurant management"
         android:visibility="gone"
         android:padding="16dp"/>
 
@@ -64,7 +64,7 @@
         android:id="@+id/manage_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Quản lý đánh giá"
+        android:text="Review management"
         android:visibility="gone"
         android:padding="16dp"/>
 

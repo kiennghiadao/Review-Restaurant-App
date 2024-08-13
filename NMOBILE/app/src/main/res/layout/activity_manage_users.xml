@@ -32,7 +32,7 @@
         android:id="@+id/add_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Thêm User"
+        android:text="Add users"
         android:layout_below="@id/role_input"
         android:layout_alignParentStart="true" />
 
@@ -40,7 +40,7 @@
         android:id="@+id/edit_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Chỉnh Sửa User"
+        android:text="Edit users"
         android:layout_below="@id/delete_user_button"
         />
 
@@ -48,7 +48,7 @@
         android:id="@+id/delete_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Xóa User"
+        android:text="Delete User"
         android:layout_below="@id/add_user_button"
         />
 
@@ -56,7 +56,7 @@
         android:id="@+id/view_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hiện User List"
+        android:text="Show User List"
         android:layout_below="@id/role_input"
         android:layout_alignParentEnd="true" />
 
@@ -64,7 +64,7 @@
         android:id="@+id/request_password_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hiện Reset Password List"
+        android:text="Show Reset Password List"
         android:layout_below="@id/view_user_button"
         android:layout_alignParentEnd="true" />
 

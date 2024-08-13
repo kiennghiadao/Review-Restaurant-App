@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:text="Đăng Nhập User"
+            android:text="Login User"
             android:textAlignment="center"
             android:textSize="4mm"
             />
@@ -32,7 +32,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="8dp"
-            android:hint="Nhập Email"
+            android:hint="Enter Email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
             android:padding="16dp">
@@ -46,7 +46,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginEnd="4dp"
             android:layout_marginTop="8dp"
-            android:hint="Nhập Mật Khẩu"
+            android:hint="Enter Password"
             android:inputType="textPassword"
             android:minHeight="48dp"
             android:padding="16dp">
@@ -63,14 +63,14 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng Nhập"
+                android:text="Log in"
                 android:id="@+id/btnLogin">
             </Button>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng Ký"
+                android:text="Register"
                 android:id="@+id/btnRegister"
                 android:layout_marginStart="16dp">
             </Button>
@@ -80,7 +80,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnForgotPassword"
-            android:text="Quên Mật Khẩu?"
+            android:text="Forgot Password?"
             android:layout_below="@+id/btnLogin"
             android:layout_marginTop="16dp"
             android:layout_centerHorizontal="true">

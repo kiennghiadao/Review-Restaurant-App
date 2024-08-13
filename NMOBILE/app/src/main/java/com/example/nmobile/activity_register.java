@@ -42,16 +42,16 @@ public class activity_register extends AppCompatActivity {
                 String role = "user"; // Thiết lập vai trò mặc định là user
 
                 if(email.isEmpty() || password.isEmpty() || confirmpassword.isEmpty()) {
-                    Toast.makeText(activity_register.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_register.this, "Please fill in all information!", Toast.LENGTH_SHORT).show();
                 } else if(!password.equals(confirmpassword)) {
-                    Toast.makeText(activity_register.this, "Mật khẩu và xác nhận mật khẩu phải khớp nhau!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_register.this, "Password and password confirmation must match!", Toast.LENGTH_SHORT).show();
                 } else {
                     if(dbHelper.checkUser(email)) {
-                        Toast.makeText(activity_register.this, "Email đã tồn tại!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_register.this, "Email already exists!", Toast.LENGTH_SHORT).show();
                     } else {
                         boolean result = dbHelper.addUser(email, password, role);
                         if(result) {
-                            Toast.makeText(activity_register.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity_register.this, "Registered successfully!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(activity_register.this, activity_login.class);
                             startActivity(intent);
                             finish();

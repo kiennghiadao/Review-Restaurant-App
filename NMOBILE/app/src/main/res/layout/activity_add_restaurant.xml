@@ -9,28 +9,28 @@
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên nhà hàng"
+        android:hint="Restaurant name"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/editTextLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Địa chỉ"
+        android:hint="Address"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/editTextType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Loại nhà hàng"
+        android:hint="Restaurant type"
         android:inputType="text"/>
 
     <EditText
         android:id="@+id/editTextDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Chi tiết"
+        android:hint="Detail"
         android:inputType="text"/>
 
     <RatingBar
@@ -49,11 +49,23 @@
         android:id="@+id/buttonAddImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chọn hình ảnh" />
+        android:text="Select image for restaurant" />
 
     <Button
         android:id="@+id/buttonAddRestaurant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thêm nhà hàng" />
+        android:text="Add restaurants" />
+
+    <Button
+        android:id="@+id/buttonDeleteRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete restaurant" />
+
+    <Button
+        android:id="@+id/buttonUpdateRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit Restaurant" />
 </LinearLayout>

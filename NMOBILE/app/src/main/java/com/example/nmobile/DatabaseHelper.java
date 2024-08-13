@@ -71,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Thêm admin mặc định
         ContentValues adminValues = new ContentValues();
         adminValues.put(COLUMN_EMAIL, "admin@gmail.com");
-        adminValues.put(COLUMN_PASSWORD, "admin123"); // Đảm bảo mã hóa mật khẩu trong thực tế
+        adminValues.put(COLUMN_PASSWORD, "admin123");
         adminValues.put(COLUMN_ROLE, "admin");
         db.insert(TABLE_USERS, null, adminValues);
 

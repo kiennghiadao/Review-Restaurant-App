@@ -38,21 +38,21 @@ public class activity_login extends AppCompatActivity {
                 String Password1 = etPassword.getText().toString().trim();
 
                 if (Email1.isEmpty() || Password1.isEmpty()) {
-                    Toast.makeText(activity_login.this, "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_login.this, "Please fill in all information!", Toast.LENGTH_SHORT).show();
                 } else {
                     DatabaseHelper dbHelper = new DatabaseHelper(activity_login.this);
                     boolean isValidUser = dbHelper.checkUser(Email1, Password1);
 
                     if (isValidUser) {
                         String role = dbHelper.getUserRole(Email1);
-                        Toast.makeText(activity_login.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_login.this, "Log in successfully!", Toast.LENGTH_SHORT).show();
                         // Chuyển sang màn hình chính hoặc màn hình người dùng
                         Intent intent = new Intent(activity_login.this, activity_main.class);
                         intent.putExtra("User Role", role);
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(activity_login.this, "Email hoặc mật khẩu không đúng!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_login.this, "Email or password is incorrect!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

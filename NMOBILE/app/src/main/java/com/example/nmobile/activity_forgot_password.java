@@ -31,7 +31,7 @@ public class activity_forgot_password extends AppCompatActivity {
                 String email = etForgotEmail.getText().toString().trim();
 
                 if (email.isEmpty()) {
-                    Toast.makeText(activity_forgot_password.this, "Vui lòng nhập email!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(activity_forgot_password.this, "Please enter email!", Toast.LENGTH_SHORT).show();
                 } else {
                     if (dbHelper.checkEmailExists(email)) {
                         long requestTime = System.currentTimeMillis(); // Thời gian yêu cầu
@@ -39,12 +39,12 @@ public class activity_forgot_password extends AppCompatActivity {
 
                         boolean result = dbHelper.addPasswordResetRequest(email, requestTime, status);
                         if (result) {
-                            Toast.makeText(activity_forgot_password.this, "Yêu cầu đặt lại mật khẩu đã được gửi!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity_forgot_password.this, "Password reset request has been sent!", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(activity_forgot_password.this, "Lỗi khi gửi yêu cầu đặt lại mật khẩu!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity_forgot_password.this, "Error sending password reset request!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(activity_forgot_password.this, "Email không tồn tại trong hệ thống!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_forgot_password.this, "Email does not exist in the system!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

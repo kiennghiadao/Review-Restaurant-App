@@ -123,22 +123,22 @@ public class Manage_Users extends AppCompatActivity {
         String role = roleInput.getText().toString();
 
         if (email.isEmpty() || password.isEmpty() || role.isEmpty()) {
-            Toast.makeText(this, "Xin hãy nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all information!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (dbHelper.checkEmailExists(email)) {
-            Toast.makeText(this, "Email đã tồn tại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Email already exists!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         boolean result = dbHelper.addManageUser(email, password, role);
         if (result) {
-            Toast.makeText(this, "Thêm user thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User added successfully!", Toast.LENGTH_SHORT).show();
             clearInputFields();
             displayUsers();
         } else {
-            Toast.makeText(this, "Thêm user thất bại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Adding user failed!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -149,18 +149,18 @@ public class Manage_Users extends AppCompatActivity {
         String newRole = roleInput.getText().toString().trim();
 
         if (email.isEmpty()) {
-            Toast.makeText(this, "Nhập email của user cần được chỉnh sửa!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter the email of the user that needs to be edited!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (newPassword.isEmpty() && newRole.isEmpty()) {
-            Toast.makeText(this, "Làm ơn điền đầy đủ ít nhất một thông tin!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill out at least one information!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         int userId = dbHelper.getUserIdByEmail(email);
         if (userId == -1) {
-            Toast.makeText(this, "Không tìm thấy user!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -168,12 +168,12 @@ public class Manage_Users extends AppCompatActivity {
         if (result) {
             boolean deleteResult = dbHelper.deletePasswordResetRequest(email);
             if (deleteResult) {
-                Toast.makeText(this, "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Password changed successfully!", Toast.LENGTH_SHORT).show();
             }
             clearInputFields(); // Xóa các trường nhập liệu
-            Toast.makeText(this, "User chỉnh sửa thành công!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User edited successfully!", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(this, "Chỉnh sửa user thất bại!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User editing failed!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -182,19 +182,19 @@ public class Manage_Users extends AppCompatActivity {
         String email = emailInput.getText().toString();
 
         if (email.isEmpty()) {
-            Toast.makeText(this, "Nhập email của user cần xóa!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter the email of the user to be deleted!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         boolean exists = dbHelper.checkEmailExists(email);
         if (!exists) {
-            Toast.makeText(this, "Không tìm thấy user!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
             return;
         }
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(DatabaseHelper.TABLE_USERS, DatabaseHelper.COLUMN_EMAIL + "=?", new String[]{email});
-        Toast.makeText(this, "Xóa user thành công!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "User deletion successful!", Toast.LENGTH_SHORT).show();
         clearInputFields();
         displayUsers();
     }
