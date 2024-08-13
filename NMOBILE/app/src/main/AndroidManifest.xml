@@ -12,24 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ĐỒÁNMOBILE"
         tools:targetApi="31">
-        <activity
-            android:name=".Manage_Users"
-            android:exported="false" />
-        <activity
-            android:name=".activity_main"
-            android:exported="false" />
-        <activity
-            android:name=".activity_forgot_password"
-            android:exported="false" />
-        <activity
-            android:name=".activity_register"
-            android:exported="false" />
-        <activity
-            android:name=".activity_login"
-            android:exported="true">
+        <activity android:name=".RestaurantDetailActivity"></activity>
+        <activity android:name=".AddRestaurantActivity" />
+        <activity android:name=".Manage_Users" />
+        <activity android:name=".activity_main" />
+        <activity android:name=".activity_forgot_password" />
+        <activity android:name=".activity_register" />
+        <activity android:name=".activity_login" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

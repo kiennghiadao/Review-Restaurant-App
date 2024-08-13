@@ -169,8 +169,6 @@ public class Manage_Users extends AppCompatActivity {
             boolean deleteResult = dbHelper.deletePasswordResetRequest(email);
             if (deleteResult) {
                 Toast.makeText(this, "Thay đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Password changed, but failed to delete request", Toast.LENGTH_SHORT).show();
             }
             clearInputFields(); // Xóa các trường nhập liệu
             Toast.makeText(this, "User chỉnh sửa thành công!", Toast.LENGTH_SHORT).show();

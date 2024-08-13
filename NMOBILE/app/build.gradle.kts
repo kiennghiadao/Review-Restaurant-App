@@ -40,9 +40,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    // Thư viện để xử lý HTTP request (volley)
-    implementation ("com.android.volley:volley:1.2.1")
     // Glide là các thư viện mạnh mẽ hơn để tải và quản lý hình ảnh
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
 }

@@ -44,7 +44,7 @@
 
     <!-- Restaurant Images -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/restaurant_recycler_view"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/category_button"

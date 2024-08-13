@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "UserDB.db";
-    private static final int DATABASE_VERSION = 4; // Tăng phiên bản cơ sở dữ liệu
+    private static final int DATABASE_VERSION = 5; // Tăng phiên bản cơ sở dữ liệu
 
     // Bảng users
     public static final String TABLE_USERS = "users";
@@ -18,14 +18,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ROLE = "role";
 
     // Bảng restaurants
-    private static final String TABLE_RESTAURANTS = "restaurants";
-    private static final String COLUMN_RESTAURANT_ID = "restaurant_id";
-    private static final String COLUMN_RESTAURANT_NAME = "name";
-    private static final String COLUMN_LOCATION = "location";
-    private static final String COLUMN_TYPE = "type";
-    private static final String COLUMN_RESTAURANT_RATING = "rating";
-    private static final String COLUMN_DETAILS = "details";
-    private static final String COLUMN_IMAGE_URL = "image_url"; // Cột mới
+    public static final String TABLE_RESTAURANTS = "restaurants";
+    public static final String COLUMN_RESTAURANT_ID = "restaurant_id";
+    public static final String COLUMN_RESTAURANT_NAME = "name";
+    public static final String COLUMN_LOCATION = "location";
+    public static final String COLUMN_TYPE = "type";
+    public static final String COLUMN_RESTAURANT_RATING = "rating";
+    public static final String COLUMN_DETAILS = "details";
+    public static final String COLUMN_IMAGE_URL = "image_url"; // Cột mới
 
     // Bảng categories
     private static final String TABLE_CATEGORIES = "categories";
@@ -83,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TYPE + " TEXT, " +
                 COLUMN_RESTAURANT_RATING + " REAL, " +
                 COLUMN_DETAILS + " TEXT, " +
-                COLUMN_IMAGE_URL + " TEXT)";
+                COLUMN_IMAGE_URL + " INTEGER)";
         db.execSQL(createRestaurantTable);
 
         // Tạo bảng categories
@@ -124,12 +124,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 4) {
-            // Thêm cột request_time vào bảng password_reset_requests
-            db.execSQL("ALTER TABLE " + TABLE_PASSWORD_RESET_REQUESTS + " ADD COLUMN " + COLUMN_REQUEST_TIME + " INTEGER");
-        }
-    }
 
+    }
     // Thêm user mới
     public boolean addUser(String email, String password, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -171,73 +167,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return exists;
-    }
-
-    // Thêm nhà hàng mới
-    public boolean addRestaurant(String name, String location, String type, double rating, String details, String imageUrl) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_RESTAURANT_NAME, name);
-        contentValues.put(COLUMN_LOCATION, location);
-        contentValues.put(COLUMN_TYPE, type);
-        contentValues.put(COLUMN_RESTAURANT_RATING, rating);
-        contentValues.put(COLUMN_DETAILS, details);
-        contentValues.put(COLUMN_IMAGE_URL, imageUrl);
-
-        long result = db.insert(TABLE_RESTAURANTS, null, contentValues);
-        db.close();
-        return result != -1;
-    }
-
-    public Cursor getAllRestaurants() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_RESTAURANTS, null, null, null, null, null, null);
-        return cursor;
-    }
-
-    // Lấy chi tiết nhà hàng
-    public Cursor getRestaurantDetails(int restaurantID) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_RESTAURANTS, null, COLUMN_RESTAURANT_ID + "=?", new String[]{String.valueOf(restaurantID)}, null, null, null);
-    }
-
-    // Thêm đánh giá mới
-    public boolean addReview(int userID, int restaurantID, double rating, String comments) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_REVIEW_USER_ID, userID);
-        contentValues.put(COLUMN_REVIEW_RESTAURANT_ID, restaurantID);
-        contentValues.put(COLUMN_REVIEW_RATING, rating);
-        contentValues.put(COLUMN_COMMENTS, comments);
-
-        long result = db.insert(TABLE_REVIEWS, null, contentValues);
-        db.close();
-        return result != -1;
-    }
-
-    // Thêm bình luận mới
-    public boolean addComment(int reviewID, int userID, String content) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_COMMENT_REVIEW_ID, reviewID);
-        contentValues.put(COLUMN_COMMENT_USER_ID, userID);
-        contentValues.put(COLUMN_CONTENT, content);
-
-        long result = db.insert(TABLE_COMMENTS, null, contentValues);
-        db.close();
-        return result != -1;
-    }
-
-    // Lấy đánh giá cho nhà hàng
-    public Cursor getReviewsForRestaurant(int restaurantID) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_REVIEWS, null, COLUMN_REVIEW_RESTAURANT_ID + "=?", new String[]{String.valueOf(restaurantID)}, null, null, null);
-    }
-
-    // Lấy bình luận cho đánh giá
-    public Cursor getCommentsForReview(int reviewID) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        return db.query(TABLE_COMMENTS, null, COLUMN_COMMENT_REVIEW_ID + "=?", new String[]{String.valueOf(reviewID)}, null, null, null);
     }
 
     // Lấy vai trò của người dùng
@@ -282,15 +211,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result > 0;
     }
-
-    // Xóa user trong quản lý user
-    public boolean deleteUser(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        int result = db.delete(TABLE_USERS, COLUMN_ID + "=?", new String[]{String.valueOf(id)});
-        db.close();
-        return result > 0;
-    }
-
     // Lấy ID của user bằng email
     public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -325,5 +245,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int rowsAffected = db.delete(TABLE_PASSWORD_RESET_REQUESTS, COLUMN_REQUEST_EMAIL + "=?", new String[]{email});
         db.close();
         return rowsAffected > 0; // Trả về true nếu có ít nhất một hàng bị xóa
+    }
+
+    // Lấy danh sách nhà hàng
+    public Cursor getAllRestaurants() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(TABLE_RESTAURANTS, null, null, null, null, null, null);
     }
 }
