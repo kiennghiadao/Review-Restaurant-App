@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "UserDB.db";
-    private static final int DATABASE_VERSION = 5; // Tăng phiên bản cơ sở dữ liệu
+    private static final int DATABASE_VERSION = 6; // Tăng phiên bản cơ sở dữ liệu
 
     // Bảng users
     public static final String TABLE_USERS = "users";
@@ -36,16 +36,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_REVIEWS = "reviews";
     private static final String COLUMN_REVIEW_ID = "review_id";
     private static final String COLUMN_REVIEW_USER_ID = "user_id";
-    private static final String COLUMN_REVIEW_RESTAURANT_ID = "restaurant_id";
+    public static final String COLUMN_REVIEW_RESTAURANT_ID = "restaurant_id";
     private static final String COLUMN_REVIEW_RATING = "rating";
     private static final String COLUMN_COMMENTS = "comments";
 
     // Bảng comments
-    private static final String TABLE_COMMENTS = "comments";
+    public static final String TABLE_COMMENTS = "comments";
     private static final String COLUMN_COMMENT_ID = "comment_id";
     private static final String COLUMN_COMMENT_REVIEW_ID = "review_id";
-    private static final String COLUMN_COMMENT_USER_ID = "user_id";
-    private static final String COLUMN_CONTENT = "content";
+    public static final String COLUMN_COMMENT_USER_ID = "user_id";
+    public static final String COLUMN_CONTENT = "content";
+    public static final String COLUMN_RATING = "rating";
 
     // Bảng yêu cầu đặt lại mật khẩu
     private static final String TABLE_PASSWORD_RESET_REQUESTS = "password_reset_requests";
@@ -83,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TYPE + " TEXT, " +
                 COLUMN_RESTAURANT_RATING + " REAL, " +
                 COLUMN_DETAILS + " TEXT, " +
-                COLUMN_IMAGE_URL + " INTEGER)";
+                COLUMN_IMAGE_URL + " TEXT)"; // Cột image_url thay đổi thành TEXT để chứa URL
         db.execSQL(createRestaurantTable);
 
         // Tạo bảng categories
@@ -108,9 +109,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_COMMENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 COLUMN_COMMENT_REVIEW_ID + " INTEGER, " +
                 COLUMN_COMMENT_USER_ID + " INTEGER, " +
+                COLUMN_REVIEW_RESTAURANT_ID + " INTEGER, " +
                 COLUMN_CONTENT + " TEXT, " +
+                COLUMN_RATING + " REAL, " +
                 "FOREIGN KEY(" + COLUMN_COMMENT_REVIEW_ID + ") REFERENCES " + TABLE_REVIEWS + "(" + COLUMN_REVIEW_ID + "), " +
-                "FOREIGN KEY(" + COLUMN_COMMENT_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "))";
+                "FOREIGN KEY(" + COLUMN_COMMENT_USER_ID + ") REFERENCES " + TABLE_USERS + "(" + COLUMN_ID + "), " +
+                "FOREIGN KEY(" + COLUMN_REVIEW_RESTAURANT_ID + ") REFERENCES " + TABLE_RESTAURANTS + "(" + COLUMN_RESTAURANT_ID + "))";
         db.execSQL(createCommentTable);
 
         // Tạo bảng yêu cầu đặt lại mật khẩu
@@ -124,8 +128,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion < 6) { // Kiểm tra phiên bản cũ
+            // Thêm cột rating vào bảng comments nếu chưa tồn tại
+            db.execSQL("ALTER TABLE " + TABLE_COMMENTS + " ADD COLUMN " + COLUMN_RATING + " REAL");
+        }
     }
+
     // Thêm user mới
     public boolean addUser(String email, String password, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -184,15 +192,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Thêm user trong quản lý user
     public boolean addManageUser(String email, String password, String role) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_EMAIL, email);
-        contentValues.put(COLUMN_PASSWORD, password);
-        contentValues.put(COLUMN_ROLE, role);
-
-        long result = db.insert(TABLE_USERS, null, contentValues);
-        db.close();
-        return result != -1;
+        return addUser(email, password, role);
     }
 
     // Sửa thông tin user trong quản lý user
@@ -211,6 +211,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result > 0;
     }
+
     // Lấy ID của user bằng email
     public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();

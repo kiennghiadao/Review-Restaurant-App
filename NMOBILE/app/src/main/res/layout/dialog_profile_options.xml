@@ -17,55 +17,52 @@
         android:id="@+id/view_review_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="View reviews history"
-        android:padding="16dp"
+        android:text="Reviews history"
         />
 
     <Button
         android:id="@+id/view_visited_restaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View checked restaurant"
-        android:padding="16dp"/>
+        android:text="Visited restaurant"
+        android:textSize="12sp"
+        />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Logout"
-        android:padding="16dp"/>
+        />
 
     <!-- Admin-only buttons -->
     <Button
         android:id="@+id/manage_users"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="User management"
-        android:visibility="gone"
-        android:padding="16dp"/>
+        android:text="User"
+        />
 
     <Button
         android:id="@+id/manage_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Category management"
-        android:visibility="gone"
-        android:padding="16dp"/>
+        android:text="Category"
+
+        />
 
     <Button
         android:id="@+id/manage_restaurants"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Restaurant management"
-        android:visibility="gone"
-        android:padding="16dp"/>
+        android:text="Restaurant"
+
+        />
 
     <Button
         android:id="@+id/manage_reviews"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Review management"
-        android:visibility="gone"
-        android:padding="16dp"/>
-
+        android:text="Reviews"
+        />
 </LinearLayout>

@@ -19,6 +19,7 @@ public class activity_login extends AppCompatActivity {
     public Button btnLogin;
     public Button btnRegister;
     public Button btnForgotPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,12 @@ public class activity_login extends AppCompatActivity {
 
                     if (isValidUser) {
                         String role = dbHelper.getUserRole(Email1);
+                        int userId = dbHelper.getUserIdByEmail(Email1); // Lấy ID người dùng
+
+                        // Lưu ID người dùng vào SharedPreferences
+                        UserSessionManager sessionManager = new UserSessionManager(activity_login.this);
+                        sessionManager.saveUserId(userId);
+
                         Toast.makeText(activity_login.this, "Log in successfully!", Toast.LENGTH_SHORT).show();
                         // Chuyển sang màn hình chính hoặc màn hình người dùng
                         Intent intent = new Intent(activity_login.this, activity_main.class);
@@ -80,4 +87,5 @@ public class activity_login extends AppCompatActivity {
             return insets;
         });
     }
+
 }
