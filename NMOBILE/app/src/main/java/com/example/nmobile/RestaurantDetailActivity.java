@@ -99,22 +99,26 @@ public class RestaurantDetailActivity extends AppCompatActivity {
                 null, null, null);
 
         if (cursor.moveToFirst()) {
-            String name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_NAME));
-            String location = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_LOCATION));
-            String type = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TYPE));
-            String details = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DETAILS));
-            float rating = cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_RATING));
-            int imageResId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_URL));
+            Restaurant restaurant = new Restaurant(
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_ID)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_NAME)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_LOCATION)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_TYPE)),
+                    cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DETAILS)),
+                    cursor.getFloat(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_RATING)),
+                    cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_URL))
+            );
 
-            nameTextView.setText(name);
-            locationTextView.setText(location);
-            typeTextView.setText(type);
-            detailsTextView.setText(details);
-            ratingBarDetail.setRating(rating);
-            imageViewDetail.setImageResource(imageResId);
+            nameTextView.setText(restaurant.getName());
+            locationTextView.setText(restaurant.getLocation());
+            typeTextView.setText(restaurant.getType());
+            detailsTextView.setText(restaurant.getDetails());
+            ratingBarDetail.setRating(restaurant.getRating());
+            imageViewDetail.setImageResource(restaurant.getImageResId());
         }
         cursor.close();
     }
+
 
     private void loadComments(int restaurantId) {
         commentsContainer.removeAllViews();

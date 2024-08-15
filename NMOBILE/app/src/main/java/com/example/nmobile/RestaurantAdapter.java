@@ -30,12 +30,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (cursor.moveToPosition(position)) {
+            final int restaurantId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_ID));
             String name = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_NAME));
-            String description = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DETAILS)); // Mô tả
+            String description = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_DETAILS));
             int imageResId = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_IMAGE_URL));
 
             holder.nameTextView.setText(name);
-            holder.descriptionTextView.setText(description); // Hiển thị mô tả
+            holder.descriptionTextView.setText(description);
 
             if (imageResId != -1) {
                 holder.imageView.setImageResource(imageResId);
@@ -43,11 +44,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
             holder.itemView.setOnClickListener(v -> {
                 Intent intent = new Intent(context, RestaurantDetailActivity.class);
-                intent.putExtra("restaurant_id", cursor.getInt(cursor.getColumnIndex(DatabaseHelper.COLUMN_RESTAURANT_ID)));
+                intent.putExtra("restaurant_id", restaurantId);
                 context.startActivity(intent);
             });
         }
     }
+
 
     @Override
     public int getItemCount() {
