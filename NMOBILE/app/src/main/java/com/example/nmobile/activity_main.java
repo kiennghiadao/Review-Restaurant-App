@@ -86,7 +86,8 @@ public class activity_main extends AppCompatActivity {
             });
 
             manageReviews.setOnClickListener(v -> {
-                // Handle manage reviews
+                Intent intent = new Intent(activity_main.this, ManageReviews.class);
+                startActivity(intent);
             });
         }
 
