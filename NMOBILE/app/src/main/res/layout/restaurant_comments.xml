@@ -2,12 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/commentsContainer"
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/btnDeleteComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Review"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnStatistic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show statistics"
+            android:layout_marginStart="16dp" />
+
+    </LinearLayout>
 </LinearLayout>
