@@ -5,29 +5,38 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.Dialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class activity_main extends AppCompatActivity {
 
+    private EditText searchBar;
     private ImageButton profileButton;
     private String userRole;
     private RecyclerView recyclerView;
     private RestaurantAdapter adapter;
     private DatabaseHelper dbHelper;
     private Button manageRestaurantsButton;
+    private ImageButton searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        searchBar = findViewById(R.id.search_bar);
+        searchButton = findViewById(R.id.search_button);
+
         // Truy xuất vai trò người dùng từ Intent
         Intent intent = getIntent();
         userRole = intent.getStringExtra("User Role");
+
+        dbHelper = new DatabaseHelper(this);
 
         // Mở nút profile
         profileButton = findViewById(R.id.profile_button);
@@ -36,7 +45,8 @@ public class activity_main extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        dbHelper = new DatabaseHelper(this);
+        searchButton.setOnClickListener(view -> performSearch());
+
         loadRestaurants();
     }
 
@@ -98,6 +108,13 @@ public class activity_main extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadRestaurants(); // Tải lại danh sách quán ăn từ cơ sở dữ liệu
+    }
+
+    private void performSearch() {
+        String query = searchBar.getText().toString();
+        Cursor cursor = dbHelper.searchRestaurants(query);
+        adapter = new RestaurantAdapter(this, cursor);
+        recyclerView.setAdapter(adapter);
     }
 
     private void loadRestaurants() {

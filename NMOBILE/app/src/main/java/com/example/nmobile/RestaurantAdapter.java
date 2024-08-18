@@ -50,7 +50,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         }
     }
 
-
     @Override
     public int getItemCount() {
         return cursor.getCount();

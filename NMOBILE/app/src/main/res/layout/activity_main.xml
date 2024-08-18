@@ -11,11 +11,26 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/search_bar_background"
         android:hint="Search for restaurant name..."
-        android:padding="10dp"/>
+        android:minHeight="48dp"
+        android:padding="10dp" />
+
+    <!-- Search Button -->
+    <ImageButton
+        android:id="@+id/search_button"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/ic_search"
+        android:background="?attr/selectableItemBackground"
+        android:contentDescription="Search"
+        android:scaleType="centerInside"/>
 
     <!-- Profile Button -->
     <ImageButton
@@ -24,7 +39,7 @@
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:contentDescription="Profile"
         android:src="@drawable/ic_profile"
         android:background="?attr/selectableItemBackground"

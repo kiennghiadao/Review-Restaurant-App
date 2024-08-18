@@ -30,7 +30,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Bảng categories
     private static final String TABLE_CATEGORIES = "categories";
     private static final String COLUMN_CATEGORY_ID = "category_id";
-    private static final String COLUMN_CATEGORY_NAME = "name";
+    public static final String COLUMN_CATEGORY_NAME = "name";
 
     // Bảng reviews
     private static final String TABLE_REVIEWS = "reviews";
@@ -252,5 +252,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllRestaurants() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(TABLE_RESTAURANTS, null, null, null, null, null, null);
+    }
+
+    // Tìm kiếm nhà hàng theo tên
+    public Cursor searchRestaurants(String query) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String[] selectionArgs = new String[]{"%" + query + "%"};
+        return db.query(TABLE_RESTAURANTS, null, COLUMN_RESTAURANT_NAME + " LIKE ?", selectionArgs, null, null, null);
     }
 }

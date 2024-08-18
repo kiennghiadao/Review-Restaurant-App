@@ -152,7 +152,6 @@ public class AddRestaurantActivity extends AppCompatActivity {
 
         if (result != -1) {
             Toast.makeText(this, "Restaurant added successfully", Toast.LENGTH_SHORT).show();
-            finish();
         } else {
             Toast.makeText(this, "Error adding restaurant", Toast.LENGTH_SHORT).show();
         }
