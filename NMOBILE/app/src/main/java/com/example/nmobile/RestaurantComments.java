@@ -119,7 +119,7 @@ public class RestaurantComments extends AppCompatActivity {
         TextView goodHeader = new TextView(this);
         goodHeader.setText("Good Reviews");
         goodHeader.setTextSize(20);
-        goodHeader.setTextColor(Color.YELLOW);
+        goodHeader.setTextColor(Color.BLUE);
         goodHeader.setPadding(8, 8, 8, 8);
         goodComments.addView(goodHeader);
 

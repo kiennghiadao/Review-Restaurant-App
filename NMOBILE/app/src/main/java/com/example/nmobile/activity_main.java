@@ -59,7 +59,11 @@ public class activity_main extends AppCompatActivity {
         Button viewVisitedRestaurants = dialog.findViewById(R.id.view_visited_restaurants);
         Button logout = dialog.findViewById(R.id.logout);
 
-        viewReviewHistory.setOnClickListener(view -> dialog.dismiss());
+        viewReviewHistory.setOnClickListener(view -> {
+            Intent intent = new Intent(activity_main.this, ReviewHistory.class);
+            startActivity(intent);
+            dialog.dismiss();
+        });
 
         viewVisitedRestaurants.setOnClickListener(view -> dialog.dismiss());
 

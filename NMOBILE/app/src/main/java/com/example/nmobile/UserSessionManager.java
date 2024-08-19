@@ -23,9 +23,4 @@ public class UserSessionManager {
     public int getUserId() {
         return sharedPreferences.getInt(KEY_USER_ID, -1); // Trả về -1 nếu không tìm thấy
     }
-
-    public void clearSession() {
-        editor.clear();
-        editor.apply();
-    }
 }

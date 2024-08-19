@@ -16,7 +16,7 @@ public class Manage_Users extends AppCompatActivity {
 
     private DatabaseHelper dbHelper;
     private EditText emailInput, passwordInput, roleInput;
-    private ListView usersListView, requestsListView, UserListView;
+    private ListView requestsListView, UserListView;
     private Button addButton, editButton, deleteButton, requestPasswordButton, viewUserButtonList;
     private boolean isRequestsListVisiblePass = false; // Biến trạng thái để theo dõi hiển thị danh sách yêu cầu
     private boolean isRequestsListVisibleUser = false; // Biến trạng thái để theo dõi hiển thị danh sách yêu cầu
@@ -31,7 +31,6 @@ public class Manage_Users extends AppCompatActivity {
         emailInput = findViewById(R.id.email_input);
         passwordInput = findViewById(R.id.password_input);
         roleInput = findViewById(R.id.role_input);
-        usersListView = findViewById(R.id.users_list_view);
         requestsListView = findViewById(R.id.requests_list_view);
         UserListView = findViewById(R.id.users_list_view);
         addButton = findViewById(R.id.add_user_button);
@@ -94,7 +93,7 @@ public class Manage_Users extends AppCompatActivity {
                 0
         );
 
-        usersListView.setAdapter(adapter);
+        UserListView.setAdapter(adapter);
     }
 
     // Hàm hiển thị yêu cầu cấp lại mật khẩu
