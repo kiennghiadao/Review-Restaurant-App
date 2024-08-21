@@ -8,14 +8,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Manage_Users extends AppCompatActivity {
 
+    private Spinner roleSpinner;
     private DatabaseHelper dbHelper;
-    private EditText emailInput, passwordInput, roleInput;
+    private EditText emailInput, passwordInput;
     private ListView requestsListView, UserListView;
     private Button addButton, editButton, deleteButton, requestPasswordButton, viewUserButtonList;
     private boolean isRequestsListVisiblePass = false; // Biến trạng thái để theo dõi hiển thị danh sách yêu cầu
@@ -30,7 +33,7 @@ public class Manage_Users extends AppCompatActivity {
         // Ánh xạ các view
         emailInput = findViewById(R.id.email_input);
         passwordInput = findViewById(R.id.password_input);
-        roleInput = findViewById(R.id.role_input);
+        roleSpinner = findViewById(R.id.role_spinner);
         requestsListView = findViewById(R.id.requests_list_view);
         UserListView = findViewById(R.id.users_list_view);
         addButton = findViewById(R.id.add_user_button);
@@ -38,6 +41,15 @@ public class Manage_Users extends AppCompatActivity {
         deleteButton = findViewById(R.id.delete_user_button);
         requestPasswordButton = findViewById(R.id.request_password_button);
         viewUserButtonList = findViewById(R.id.view_user_button);
+
+        //Thiết lập adapter để liên kết với array resourse cho spinner
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.user_roles,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roleSpinner.setAdapter(adapter);
 
         // Thiết lập sự kiện cho các nút
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +131,7 @@ public class Manage_Users extends AppCompatActivity {
     private void addUser() {
         String email = emailInput.getText().toString();
         String password = passwordInput.getText().toString();
-        String role = roleInput.getText().toString();
+        String role = roleSpinner.getSelectedItem().toString();
 
         if (email.isEmpty() || password.isEmpty() || role.isEmpty()) {
             Toast.makeText(this, "Please fill in all information!", Toast.LENGTH_SHORT).show();
@@ -145,7 +157,7 @@ public class Manage_Users extends AppCompatActivity {
     private void editUser() {
         String email = emailInput.getText().toString().trim();
         String newPassword = passwordInput.getText().toString().trim();
-        String newRole = roleInput.getText().toString().trim();
+        String newRole = roleSpinner.getSelectedItem().toString().trim();
 
         if (email.isEmpty()) {
             Toast.makeText(this, "Enter the email of the user that needs to be edited!", Toast.LENGTH_SHORT).show();
@@ -202,7 +214,7 @@ public class Manage_Users extends AppCompatActivity {
     private void clearInputFields() {
         emailInput.setText("");
         passwordInput.setText("");
-        roleInput.setText("");
+        roleSpinner.setSelection(0);
     }
 
     // Hàm hiển thị hoặc ẩn yêu cầu cấp lại mật khẩu

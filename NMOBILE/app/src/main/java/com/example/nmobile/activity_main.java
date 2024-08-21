@@ -56,7 +56,6 @@ public class activity_main extends AppCompatActivity {
 
         // Set up common menu items
         Button viewReviewHistory = dialog.findViewById(R.id.view_review_history);
-        Button viewVisitedRestaurants = dialog.findViewById(R.id.view_visited_restaurants);
         Button logout = dialog.findViewById(R.id.logout);
 
         viewReviewHistory.setOnClickListener(view -> {
@@ -64,8 +63,6 @@ public class activity_main extends AppCompatActivity {
             startActivity(intent);
             dialog.dismiss();
         });
-
-        viewVisitedRestaurants.setOnClickListener(view -> dialog.dismiss());
 
         logout.setOnClickListener(view -> {
             Intent intent = new Intent(activity_main.this, activity_login.class);

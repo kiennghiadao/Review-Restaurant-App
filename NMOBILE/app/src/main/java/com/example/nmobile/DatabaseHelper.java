@@ -52,8 +52,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_PASSWORD_RESET_REQUESTS = "password_reset_requests";
     private static final String COLUMN_REQUEST_ID = "request_id";
     private static final String COLUMN_REQUEST_EMAIL = "email";
-    private static final String COLUMN_REQUEST_TIME = "request_time"; // Đổi tên cột từ timestamp thành request_time
-    private static final String COLUMN_REQUEST_STATUS = "status"; // "pending" hoặc "completed"
+    private static final String COLUMN_REQUEST_TIME = "request_time";
+    private static final String COLUMN_REQUEST_STATUS = "status";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,7 +84,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_TYPE + " TEXT, " +
                 COLUMN_RESTAURANT_RATING + " REAL, " +
                 COLUMN_DETAILS + " TEXT, " +
-                COLUMN_IMAGE_URL + " TEXT)"; // Cột image_url thay đổi thành TEXT để chứa URL
+                COLUMN_IMAGE_URL + " TEXT)";
         db.execSQL(createRestaurantTable);
 
         // Tạo bảng categories

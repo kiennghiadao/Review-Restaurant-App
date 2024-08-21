@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ĐỒ ÁN MOBILE</string>
+    <string name="role_admin">admin</string>
+    <string name="role_user">user</string>
+    <string-array name="user_roles">
+        <item>@string/role_admin</item>
+        <item>@string/role_user</item>
+    </string-array>
 </resources>

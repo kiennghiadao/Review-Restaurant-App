@@ -17,15 +17,7 @@
         android:id="@+id/view_review_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reviews history"
-        />
-
-    <Button
-        android:id="@+id/view_visited_restaurants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Visited restaurant"
-        android:textSize="12sp"
+        android:text="Reviews History"
         />
 
     <Button
