@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ĐỒÁNMOBILE"
         tools:targetApi="31">
+        <activity android:name=".ManageCategories"></activity>
         <activity android:name=".ReviewHistory"/>
         <activity android:name=".RestaurantComments"/>
         <activity android:name=".ManageReviews"/>

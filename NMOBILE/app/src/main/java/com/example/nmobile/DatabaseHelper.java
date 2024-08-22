@@ -28,8 +28,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_IMAGE_URL = "image_url"; // Cột mới
 
     // Bảng categories
-    private static final String TABLE_CATEGORIES = "categories";
-    private static final String COLUMN_CATEGORY_ID = "category_id";
+    public static final String TABLE_CATEGORIES = "categories";
+    public static final String COLUMN_CATEGORY_ID = "category_id";
     public static final String COLUMN_CATEGORY_NAME = "name";
 
     // Bảng reviews
@@ -260,4 +260,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = new String[]{"%" + query + "%"};
         return db.query(TABLE_RESTAURANTS, null, COLUMN_RESTAURANT_NAME + " LIKE ?", selectionArgs, null, null, null);
     }
+
+    public Cursor getAllCategories() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query = "SELECT " + COLUMN_CATEGORY_ID + " AS _id, " + COLUMN_CATEGORY_NAME + " FROM " + TABLE_CATEGORIES;
+        return db.rawQuery(query, null);
+    }
+
+    public boolean addCategory(String categoryName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORY_NAME, categoryName);
+
+        long result = db.insert(TABLE_CATEGORIES, null, values);
+        return result != -1;
+    }
+
+    public boolean updateCategory(long categoryId, String newCategoryName) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORY_NAME, newCategoryName);
+
+        int result = db.update(TABLE_CATEGORIES, values, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
+        return result > 0;
+    }
+
+    public boolean deleteCategory(long categoryId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        int result = db.delete(TABLE_CATEGORIES, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
+        return result > 0;
+    }
+
 }

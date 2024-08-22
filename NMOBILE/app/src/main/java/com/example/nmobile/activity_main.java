@@ -88,7 +88,8 @@ public class activity_main extends AppCompatActivity {
             });
 
             manageCategories.setOnClickListener(v -> {
-                // Handle manage categories
+                Intent intent = new Intent(activity_main.this, ManageCategories.class);
+                startActivity(intent);
             });
 
             manageRestaurantsButton.setOnClickListener(v -> {
