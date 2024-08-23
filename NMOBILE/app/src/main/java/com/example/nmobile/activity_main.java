@@ -3,11 +3,15 @@ package com.example.nmobile;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.Dialog;
+import android.widget.PopupMenu;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class activity_main extends AppCompatActivity {
 
+    private Button categoryButton;
     private EditText searchBar;
     private ImageButton profileButton;
     private String userRole;
@@ -29,6 +34,7 @@ public class activity_main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        categoryButton = findViewById(R.id.category_button);
         searchBar = findViewById(R.id.search_bar);
         searchButton = findViewById(R.id.search_button);
 
@@ -46,6 +52,9 @@ public class activity_main extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         searchButton.setOnClickListener(view -> performSearch());
+
+        Button categoryButton = findViewById(R.id.category_button);
+        categoryButton.setOnClickListener(view -> showCategoryMenu(view));
 
         loadRestaurants();
     }
@@ -104,6 +113,29 @@ public class activity_main extends AppCompatActivity {
         }
 
         dialog.show();
+    }
+
+    private void showCategoryMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        popupMenu.getMenu().add("All category"); // Thêm mục "All category"
+
+        // Lấy các danh mục từ cơ sở dữ liệu và thêm vào menu
+        Cursor cursor = dbHelper.getAllCategories();
+        while (cursor.moveToNext()) {
+            String categoryName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY_NAME));
+            popupMenu.getMenu().add(categoryName);
+        }
+        cursor.close();
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            String selectedCategory = item.getTitle().toString();
+            Toast.makeText(this, "Selected: " + selectedCategory, Toast.LENGTH_SHORT).show();
+            // Xử lý khi một danh mục được chọn
+            return true;
+        });
+
+        popupMenu.show();
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.example.nmobile;
 
 import android.database.Cursor;
+import android.database.MatrixCursor;
+import android.database.MergeCursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,6 +57,13 @@ public class ManageCategories extends AppCompatActivity {
 
     private void loadCategories() {
         Cursor cursor = dbHelper.getAllCategories();
+
+        // Thêm mục "All category" vào đầu cursor
+        MatrixCursor extras = new MatrixCursor(new String[]{DatabaseHelper.COLUMN_CATEGORY_ID, DatabaseHelper.COLUMN_CATEGORY_NAME});
+        extras.addRow(new Object[]{-1, "All category"});
+        Cursor[] cursors = {extras, cursor};
+        Cursor extendedCursor = new MergeCursor(cursors);
+
         String[] from = {DatabaseHelper.COLUMN_CATEGORY_NAME};
         int[] to = {android.R.id.text1};
         adapter = new SimpleCursorAdapter(this, android.R.layout.simple_list_item_1, cursor, from, to, 0);
