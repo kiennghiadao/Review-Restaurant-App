@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "UserDB.db";
-    private static final int DATABASE_VERSION = 6; // Tăng phiên bản cơ sở dữ liệu
+    private static final int DATABASE_VERSION = 7; // Tăng phiên bản cơ sở dữ liệu
 
     // Bảng users
     public static final String TABLE_USERS = "users";
@@ -117,6 +117,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY(" + COLUMN_REVIEW_RESTAURANT_ID + ") REFERENCES " + TABLE_RESTAURANTS + "(" + COLUMN_RESTAURANT_ID + "))";
         db.execSQL(createCommentTable);
 
+        // Tạo bảng danh mục chứa nhà hàng
+        String createCategoryRestaurantTable = "CREATE TABLE CategoryRestaurantTable (" +
+                COLUMN_CATEGORY_ID + " INTEGER, " +
+                COLUMN_RESTAURANT_ID + " INTEGER, " +
+                "FOREIGN KEY(" + COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORY_ID + "), " +
+                "FOREIGN KEY(" + COLUMN_RESTAURANT_ID + ") REFERENCES " + TABLE_RESTAURANTS + "(" + COLUMN_RESTAURANT_ID + "))";
+        db.execSQL(createCategoryRestaurantTable);
+
         // Tạo bảng yêu cầu đặt lại mật khẩu
         String createPasswordResetRequestTable = "CREATE TABLE " + TABLE_PASSWORD_RESET_REQUESTS + " (" +
                 COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -128,9 +136,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < 6) { // Kiểm tra phiên bản cũ
-            // Thêm cột rating vào bảng comments nếu chưa tồn tại
-            db.execSQL("ALTER TABLE " + TABLE_COMMENTS + " ADD COLUMN " + COLUMN_RATING + " REAL");
+        if (oldVersion < 7) {
+            // Thêm bảng CategoryRestaurantTable nếu không tồn tại
+            String createCategoryRestaurantTable = "CREATE TABLE IF NOT EXISTS " + "CategoryRestaurantTable" + " (" +
+                    COLUMN_CATEGORY_ID + " INTEGER, " +
+                    COLUMN_RESTAURANT_ID + " INTEGER, " +
+                    "FOREIGN KEY(" + COLUMN_CATEGORY_ID + ") REFERENCES " + TABLE_CATEGORIES + "(" + COLUMN_CATEGORY_ID + "), " +
+                    "FOREIGN KEY(" + COLUMN_RESTAURANT_ID + ") REFERENCES " + TABLE_RESTAURANTS + "(" + COLUMN_RESTAURANT_ID + "))";
+            db.execSQL(createCategoryRestaurantTable);
         }
     }
 
@@ -263,8 +276,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getAllCategories() {
         SQLiteDatabase db = this.getReadableDatabase();
-        String query = "SELECT " + COLUMN_CATEGORY_ID + " AS _id, " + COLUMN_CATEGORY_NAME + " FROM " + TABLE_CATEGORIES;
-        return db.rawQuery(query, null);
+        return db.query(
+                TABLE_CATEGORIES,
+                new String[]{COLUMN_CATEGORY_ID + " AS _id", COLUMN_CATEGORY_NAME + " AS _name"}, // Đặt alias cho cột
+                null,
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     public boolean addCategory(String categoryName) {
@@ -291,4 +311,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result > 0;
     }
 
+    public boolean addRestaurantToCategory(long categoryId, long restaurantId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CATEGORY_ID, categoryId);
+        values.put(COLUMN_RESTAURANT_ID, restaurantId);
+        long result = db.insert("CategoryRestaurantTable", null, values);
+        db.close();
+        return result != -1;
+    }
+
+    public Cursor getRestaurantsByCategory(long categoryId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String query;
+        if (categoryId == 0) {
+            // Lấy tất cả nhà hàng
+            query = "SELECT * FROM " + TABLE_RESTAURANTS;
+        } else {
+            // Lấy nhà hàng theo danh mục
+            query = "SELECT * FROM " + TABLE_RESTAURANTS + " WHERE " + COLUMN_RESTAURANT_ID + " IN (SELECT " + COLUMN_RESTAURANT_ID + " FROM CategoryRestaurantTable WHERE " + COLUMN_CATEGORY_ID + " = ?)";
+        }
+        return db.rawQuery(query, new String[]{String.valueOf(categoryId)});
+    }
 }

@@ -55,6 +55,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         return cursor.getCount();
     }
 
+    // Lấy cursor
+    public Cursor getCursor() {return cursor;}
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView descriptionTextView;

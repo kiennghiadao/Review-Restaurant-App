@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class activity_main extends AppCompatActivity {
 
-    private Button categoryButton;
     private EditText searchBar;
     private ImageButton profileButton;
     private String userRole;
@@ -34,7 +33,6 @@ public class activity_main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        categoryButton = findViewById(R.id.category_button);
         searchBar = findViewById(R.id.search_bar);
         searchButton = findViewById(R.id.search_button);
 
@@ -120,18 +118,35 @@ public class activity_main extends AppCompatActivity {
         MenuInflater inflater = popupMenu.getMenuInflater();
         popupMenu.getMenu().add("All category"); // Thêm mục "All category"
 
-        // Lấy các danh mục từ cơ sở dữ liệu và thêm vào menu
-        Cursor cursor = dbHelper.getAllCategories();
-        while (cursor.moveToNext()) {
-            String categoryName = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_CATEGORY_NAME));
-            popupMenu.getMenu().add(categoryName);
+        Cursor cursor = null;
+        try {
+            // Lấy các danh mục từ cơ sở dữ liệu và thêm vào menu
+            cursor = dbHelper.getAllCategories();
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    // Đọc dữ liệu từ Cursor
+                    String categoryName = cursor.getString(cursor.getColumnIndexOrThrow("_name")); // Cập nhật từ COLUMN_CATEGORY_NAME thành _id
+                    long categoryId = cursor.getLong(cursor.getColumnIndexOrThrow("_id")); // Cập nhật từ COLUMN_CATEGORY_ID thành _id
+                    popupMenu.getMenu().add(0, (int) categoryId, 0, categoryName);
+                } while (cursor.moveToNext());
+            } else {
+                Toast.makeText(this, "No categories found", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Ghi lại lỗi nếu có
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        cursor.close();
 
         popupMenu.setOnMenuItemClickListener(item -> {
-            String selectedCategory = item.getTitle().toString();
-            Toast.makeText(this, "Selected: " + selectedCategory, Toast.LENGTH_SHORT).show();
-            // Xử lý khi một danh mục được chọn
+            int selectedCategoryId = item.getItemId();
+            if (selectedCategoryId == 0) { // "All category" được chọn
+                loadRestaurants();
+            } else {
+                loadRestaurantsByCategory(selectedCategoryId);
+            }
             return true;
         });
 
@@ -153,6 +168,12 @@ public class activity_main extends AppCompatActivity {
 
     private void loadRestaurants() {
         Cursor cursor = dbHelper.getAllRestaurants();
+        adapter = new RestaurantAdapter(this, cursor);
+        recyclerView.setAdapter(adapter);
+    }
+
+    private void loadRestaurantsByCategory(long categoryId) {
+        Cursor cursor = dbHelper.getRestaurantsByCategory(categoryId);
         adapter = new RestaurantAdapter(this, cursor);
         recyclerView.setAdapter(adapter);
     }

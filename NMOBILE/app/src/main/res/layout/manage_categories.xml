@@ -29,6 +29,12 @@
         android:layout_height="wrap_content"
         android:text="Xóa danh mục" />
 
+    <Button
+        android:id="@+id/add_restaurant_to_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Thêm nhà hàng vào danh mục"/>
+
     <ListView
         android:id="@+id/categories_list_view"
         android:layout_width="match_parent"
