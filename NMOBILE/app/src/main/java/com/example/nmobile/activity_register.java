@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
@@ -20,6 +21,7 @@ public class activity_register extends AppCompatActivity {
     public EditText etConfirmPassword;
     public Button btnRegister;
     public DatabaseHelper dbHelper;
+    public TextView tvSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class activity_register extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_register);
 
+        tvSignIn = findViewById(R.id.tvSignIn);
         etEmail=findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
@@ -60,6 +63,14 @@ public class activity_register extends AppCompatActivity {
                         }
                     }
                 }
+            }
+        });
+
+        tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity_register.this, activity_login.class);
+                startActivity(intent);
             }
         });
 

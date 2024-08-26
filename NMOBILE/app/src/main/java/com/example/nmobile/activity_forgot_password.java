@@ -1,9 +1,11 @@
 package com.example.nmobile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -14,6 +16,7 @@ public class activity_forgot_password extends AppCompatActivity {
     public EditText etForgotEmail;
     public Button btnSendRequest;
     public DatabaseHelper dbHelper;
+    public TextView tvSignIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class activity_forgot_password extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_forgot_password);
 
+        tvSignIn = findViewById(R.id.tvSignIn);
         etForgotEmail = findViewById(R.id.etForgotEmail);
         btnSendRequest = findViewById(R.id.btnSendRequest);
         dbHelper = new DatabaseHelper(this);
@@ -47,6 +51,14 @@ public class activity_forgot_password extends AppCompatActivity {
                         Toast.makeText(activity_forgot_password.this, "Email does not exist in the system!", Toast.LENGTH_SHORT).show();
                     }
                 }
+            }
+        });
+
+        tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(activity_forgot_password.this, activity_login.class);
+                startActivity(intent);
             }
         });
     }
