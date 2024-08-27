@@ -1,68 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="16dp"
-    android:background="#FFFFE0"> <!-- Đặt màu nền thành vàng nhạt -->
+    android:background="@drawable/hinhnenmobile">
 
-    <!-- Search Bar -->
-    <EditText
-        android:id="@+id/search_bar"
+    <!-- Phần 1: Top Layout -->
+    <LinearLayout
+        android:id="@+id/top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="40dp"
-        android:background="@drawable/search_bar_background"
-        android:hint="Search for restaurant name..."
-        android:minHeight="48dp"
-        android:padding="10dp" />
-
-    <!-- Search Button -->
-    <ImageButton
-        android:id="@+id/search_button"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="40dp"
-        android:src="@drawable/ic_search"
-        android:background="?attr/selectableItemBackground"
-        android:contentDescription="Search"
-        android:scaleType="centerInside"/>
-
-    <!-- Profile Button -->
-    <ImageButton
-        android:id="@+id/profile_button"
-        android:layout_width="30dp"
-        android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="15dp"
-        android:contentDescription="Profile"
-        android:src="@drawable/ic_profile"
-        android:background="?attr/selectableItemBackground"
-        android:scaleType="centerInside"/>
-
-    <!-- Category Button -->
-    <Button
-        android:id="@+id/category_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_bar"
-        android:layout_marginTop="16dp"
-        android:text="Restaurant category"
-        android:textColor="@android:color/white"
         android:padding="10dp"
-        />
+        android:background="@drawable/rounded_background"
+        android:backgroundTint="@android:color/white"
+        android:orientation="horizontal">
 
-    <!-- Restaurant Images -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        <!-- Search Bar -->
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/search_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/search_bar_background"
+                android:textColorHint="@color/white"
+                android:hint="Search for restaurant name..."
+                android:minHeight="48dp"
+                android:padding="10dp"
+                android:textStyle="bold" />
+
+            <!-- Search Button (Kính lúp) -->
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="18dp"
+                android:layout_marginTop="12dp"
+                android:src="@drawable/ic_search"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="Search"
+                android:scaleType="centerInside" />
+        </RelativeLayout>
+
+        <!-- Profile Button -->
+        <ImageButton
+            android:id="@+id/profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginTop="12dp"
+            android:src="@drawable/ic_profile"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="Profile"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+    <!-- Phần 2: Category và RecyclerView -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/category_button"
-        android:layout_marginTop="16dp"
-        android:orientation="vertical"/>
-</RelativeLayout>
+        android:orientation="vertical"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background">
+
+        <!-- Category Spinner -->
+        <Spinner
+            android:id="@+id/category_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/black"
+            android:textColor="@android:color/white"
+            android:padding="10dp" />
+
+        <!-- RecyclerView -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -3,19 +3,22 @@ package com.example.nmobile;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.app.Dialog;
-import android.widget.PopupMenu;
-import android.widget.Toast;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+import android.util.SparseArray;
 
 public class activity_main extends AppCompatActivity {
 
@@ -27,6 +30,8 @@ public class activity_main extends AppCompatActivity {
     private DatabaseHelper dbHelper;
     private Button manageRestaurantsButton;
     private ImageButton searchButton;
+    private Spinner categorySpinner;
+    private SparseArray<Long> categoryIds; // Lưu trữ ID danh mục
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +40,38 @@ public class activity_main extends AppCompatActivity {
 
         searchBar = findViewById(R.id.search_bar);
         searchButton = findViewById(R.id.search_button);
+        profileButton = findViewById(R.id.profile_button);
+        recyclerView = findViewById(R.id.recyclerView);
+        categorySpinner = findViewById(R.id.category_spinner);
 
         // Truy xuất vai trò người dùng từ Intent
         Intent intent = getIntent();
         userRole = intent.getStringExtra("User Role");
 
         dbHelper = new DatabaseHelper(this);
-
-        // Mở nút profile
-        profileButton = findViewById(R.id.profile_button);
-        profileButton.setOnClickListener(view -> ShowProfileOptions());
-
-        recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        profileButton.setOnClickListener(view -> ShowProfileOptions());
         searchButton.setOnClickListener(view -> performSearch());
 
-        Button categoryButton = findViewById(R.id.category_button);
-        categoryButton.setOnClickListener(view -> showCategoryMenu(view));
+        loadCategoriesIntoSpinner();
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                long selectedCategoryId = categoryIds.get(position);
+                if (selectedCategoryId == 0) { // "All category" được chọn
+                    loadRestaurants();
+                } else {
+                    loadRestaurantsByCategory(selectedCategoryId);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Không làm gì
+            }
+        });
 
         loadRestaurants();
     }
@@ -61,7 +80,6 @@ public class activity_main extends AppCompatActivity {
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_profile_options);
 
-        // Set up common menu items
         Button viewReviewHistory = dialog.findViewById(R.id.view_review_history);
         Button logout = dialog.findViewById(R.id.logout);
 
@@ -113,44 +131,32 @@ public class activity_main extends AppCompatActivity {
         dialog.show();
     }
 
-    private void showCategoryMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(this, view);
-        MenuInflater inflater = popupMenu.getMenuInflater();
-        popupMenu.getMenu().add("All category"); // Thêm mục "All category"
+    private void loadCategoriesIntoSpinner() {
+        Cursor cursor = dbHelper.getAllCategories();
+        List<String> categories = new ArrayList<>();
+        categories.add("All category"); // Thêm mục "All category"
+        categoryIds = new SparseArray<>();
 
-        Cursor cursor = null;
-        try {
-            // Lấy các danh mục từ cơ sở dữ liệu và thêm vào menu
-            cursor = dbHelper.getAllCategories();
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    // Đọc dữ liệu từ Cursor
-                    String categoryName = cursor.getString(cursor.getColumnIndexOrThrow("_name")); // Cập nhật từ COLUMN_CATEGORY_NAME thành _id
-                    long categoryId = cursor.getLong(cursor.getColumnIndexOrThrow("_id")); // Cập nhật từ COLUMN_CATEGORY_ID thành _id
-                    popupMenu.getMenu().add(0, (int) categoryId, 0, categoryName);
-                } while (cursor.moveToNext());
-            } else {
-                Toast.makeText(this, "No categories found", Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // Ghi lại lỗi nếu có
-        } finally {
-            if (cursor != null) {
-                cursor.close();
-            }
+        categoryIds.put(0, 0L); // ID cho "All category"
+
+        if (cursor != null && cursor.moveToFirst()) {
+            int index = 1; // Bắt đầu từ 1 vì 0 là "All category"
+            do {
+                String categoryName = cursor.getString(cursor.getColumnIndexOrThrow("_name"));
+                long categoryId = cursor.getLong(cursor.getColumnIndexOrThrow("_id"));
+                categories.add(categoryName);
+                categoryIds.put(index++, categoryId); // Lưu ID tương ứng
+            } while (cursor.moveToNext());
         }
 
-        popupMenu.setOnMenuItemClickListener(item -> {
-            int selectedCategoryId = item.getItemId();
-            if (selectedCategoryId == 0) { // "All category" được chọn
-                loadRestaurants();
-            } else {
-                loadRestaurantsByCategory(selectedCategoryId);
-            }
-            return true;
-        });
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, categories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        categorySpinner.setAdapter(adapter);
 
-        popupMenu.show();
+        if (cursor != null) {
+            cursor.close();
+        }
     }
 
     @Override
