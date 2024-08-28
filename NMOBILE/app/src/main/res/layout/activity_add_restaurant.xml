@@ -5,67 +5,99 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/editTextName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Restaurant name"
-        android:inputType="text"/>
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <EditText
+            android:id="@+id/editTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Restaurant name"
+            android:inputType="text"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_edittext"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"/>
 
-    <EditText
-        android:id="@+id/editTextLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Address"
-        android:inputType="text"/>
+        <EditText
+            android:id="@+id/editTextLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:inputType="text"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_edittext"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"/>
 
-    <EditText
-        android:id="@+id/editTextType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Restaurant type"
-        android:inputType="text"/>
+        <EditText
+            android:id="@+id/editTextType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Restaurant type"
+            android:inputType="text"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_edittext"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"/>
 
-    <EditText
-        android:id="@+id/editTextDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Detail"
-        android:inputType="text"/>
+        <EditText
+            android:id="@+id/editTextDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Detail"
+            android:inputType="text"
+            android:textStyle="bold"
+            android:background="@drawable/rounded_edittext"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"/>
 
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:stepSize="0.1"/>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="0.1" />
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop" />
 
-    <Button
-        android:id="@+id/buttonAddImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select image for restaurant" />
+        <Button
+            android:id="@+id/buttonAddImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select image for restaurant"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/buttonAddRestaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add restaurants" />
+        <Button
+            android:id="@+id/buttonAddRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add restaurants"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/buttonDeleteRestaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Delete restaurant" />
+        <Button
+            android:id="@+id/buttonDeleteRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete restaurant"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/buttonUpdateRestaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Edit Restaurant" />
+        <Button
+            android:id="@+id/buttonUpdateRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Restaurant"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>

@@ -149,25 +149,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Thêm user mới
     public boolean addUser(String email, String password, String role) {
+        // Mở cơ sở dữ liệu để ghi
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_EMAIL, email);
+        contentValues.put(COLUMN_EMAIL, email); // Thêm email vào contentValues
         contentValues.put(COLUMN_PASSWORD, password);
         contentValues.put(COLUMN_ROLE, role);
 
-        long result = db.insert(TABLE_USERS, null, contentValues);
-        db.close();
-        return result != -1;
+        long result = db.insert(TABLE_USERS, null, contentValues); // Thực hiện chèn vào bảng users
+        db.close(); // Đóng cơ sở dữ liệu
+        return result != -1; // Trả về true nếu thêm thành công
     }
 
     // Kiểm tra email đã tồn tại
     public boolean checkUser(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID}, COLUMN_EMAIL + "=?", new String[]{email}, null, null, null);
-        int count = cursor.getCount();
+        int count = cursor.getCount(); // Đếm số bản ghi
         cursor.close();
         db.close();
-        return count > 0;
+        return count > 0; // Trả về true nếu tìm thấy email
     }
 
     // Kiểm tra thông tin đăng nhập
@@ -193,19 +194,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Lấy vai trò của người dùng
     public String getUserRole(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String role = null;
+        String role = null; // Khởi tạo biến vai trò
         Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ROLE}, COLUMN_EMAIL + "=?", new String[]{email}, null, null, null);
-        if (cursor.moveToFirst()) {
-            role = cursor.getString(cursor.getColumnIndex(COLUMN_ROLE));
+        if (cursor.moveToFirst()) { // Nếu cursor có dữ liệu
+            role = cursor.getString(cursor.getColumnIndex(COLUMN_ROLE)); // Lấy vai trò
         }
         cursor.close();
         db.close();
-        return role;
+        return role; // Trả về vai trò
     }
 
     // Thêm user trong quản lý user
     public boolean addManageUser(String email, String password, String role) {
-        return addUser(email, password, role);
+        return addUser(email, password, role); // Gọi phương thức addUser
     }
 
     // Sửa thông tin user trong quản lý user
@@ -213,13 +214,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
-        if (!newPassword.isEmpty()) {
-            contentValues.put(COLUMN_PASSWORD, newPassword);
+        if (!newPassword.isEmpty()) { // Nếu mật khẩu mới không rỗng
+            contentValues.put(COLUMN_PASSWORD, newPassword); // Thêm mật khẩu mới
         }
-        if (!newRole.isEmpty()) {
-            contentValues.put(COLUMN_ROLE, newRole);
+        if (!newRole.isEmpty()) { // Nếu vai trò mới không rỗng
+            contentValues.put(COLUMN_ROLE, newRole); // Thêm vai trò mới
         }
 
+        // Cập nhật thông tin
         int result = db.update(TABLE_USERS, contentValues, COLUMN_ID + "=?", new String[]{String.valueOf(userId)});
         db.close();
         return result > 0;
@@ -230,13 +232,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_USERS, new String[]{COLUMN_ID}, COLUMN_EMAIL + "=?", new String[]{email}, null, null, null);
 
-        if (cursor != null && cursor.moveToFirst()) {
-            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+        if (cursor != null && cursor.moveToFirst()) { // Nếu cursor không null và có dữ liệu
+            int userId = cursor.getInt(cursor.getColumnIndex(COLUMN_ID)); // Lấy ID người dùng
             cursor.close();
-            return userId;
+            return userId; // Trả về ID
         }
         if (cursor != null) {
-            cursor.close();
+            cursor.close(); // Đóng cursor nếu không rỗng
         }
         return -1;
     }
@@ -245,10 +247,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean addPasswordResetRequest(String email, long requestTime, String status) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_REQUEST_EMAIL, email);
+        values.put(COLUMN_REQUEST_EMAIL, email); // Thêm email vào yêu cầu
         values.put(COLUMN_REQUEST_TIME, requestTime);
         values.put(COLUMN_REQUEST_STATUS, status);
 
+        // Thêm yêu cầu vào bảng
         long result = db.insert(TABLE_PASSWORD_RESET_REQUESTS, null, values);
         return result != -1; // Trả về true nếu thêm thành công, false nếu không thành công
     }
@@ -256,6 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Xóa yêu cầu đặt lại mật khẩu theo email sau khi admin đã đổi pass
     public boolean deletePasswordResetRequest(String email) {
         SQLiteDatabase db = this.getWritableDatabase();
+        // Xóa yêu cầu
         int rowsAffected = db.delete(TABLE_PASSWORD_RESET_REQUESTS, COLUMN_REQUEST_EMAIL + "=?", new String[]{email});
         db.close();
         return rowsAffected > 0; // Trả về true nếu có ít nhất một hàng bị xóa
@@ -264,13 +268,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Lấy danh sách nhà hàng
     public Cursor getAllRestaurants() {
         SQLiteDatabase db = this.getReadableDatabase();
+        // Trả về danh sách nhà hàng
         return db.query(TABLE_RESTAURANTS, null, null, null, null, null, null);
     }
 
     // Tìm kiếm nhà hàng theo tên
     public Cursor searchRestaurants(String query) {
         SQLiteDatabase db = this.getReadableDatabase();
-        String[] selectionArgs = new String[]{"%" + query + "%"};
+        String[] selectionArgs = new String[]{"%" + query + "%"};// Tạo tham số tìm kiếm
+        // Tìm kiếm nhà hàng
         return db.query(TABLE_RESTAURANTS, null, COLUMN_RESTAURANT_NAME + " LIKE ?", selectionArgs, null, null, null);
     }
 
@@ -284,14 +290,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null,
                 null,
                 null
-        );
+        ); // Lấy danh sách danh mục
     }
 
     public boolean addCategory(String categoryName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CATEGORY_NAME, categoryName);
-
+        values.put(COLUMN_CATEGORY_NAME, categoryName); // Thêm tên danh mục
+        // Thêm danh mục vào bảng
         long result = db.insert(TABLE_CATEGORIES, null, values);
         return result != -1;
     }
@@ -316,6 +322,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CATEGORY_ID, categoryId);
         values.put(COLUMN_RESTAURANT_ID, restaurantId);
+        // Thêm vào bảng liên kết
         long result = db.insert("CategoryRestaurantTable", null, values);
         db.close();
         return result != -1;
@@ -326,7 +333,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query;
         if (categoryId == 0) {
             // Lấy tất cả nhà hàng
-            query = "SELECT * FROM " + TABLE_RESTAURANTS;
+            query = "SELECT * FROM " + TABLE_RESTAURANTS; // Truy vấn để lấy tất cả nhà hàng
         } else {
             // Lấy nhà hàng theo danh mục
             query = "SELECT * FROM " + TABLE_RESTAURANTS + " WHERE " + COLUMN_RESTAURANT_ID + " IN (SELECT " + COLUMN_RESTAURANT_ID + " FROM CategoryRestaurantTable WHERE " + COLUMN_CATEGORY_ID + " = ?)";

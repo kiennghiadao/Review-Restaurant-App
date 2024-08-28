@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFE0">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,52 +12,84 @@
         android:text="Profile"
         android:textSize="24sp"
         android:textAlignment="center"
-        android:padding="16dp"></TextView>
+        android:padding="10dp"
+        android:textStyle="bold"></TextView>
 
-    <Button
-        android:id="@+id/view_review_history"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reviews History"
-        />
-
-    <Button
-        android:id="@+id/logout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
-        />
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/rounded_background">
+        <Button
+            android:id="@+id/view_review_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reviews History"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
 
-    <!-- Admin-only buttons -->
-    <Button
-        android:id="@+id/manage_users"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="User"
-        android:visibility="gone"
-        />
+        <Button
+            android:id="@+id/logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logout"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
 
-    <Button
-        android:id="@+id/manage_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Category"
-        android:visibility="gone"
-        />
+        <!-- Admin-only buttons -->
+        <Button
+            android:id="@+id/manage_users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
 
-    <Button
-        android:id="@+id/manage_restaurants"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Restaurant"
-        android:visibility="gone"
-        />
+        <Button
+            android:id="@+id/manage_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Category"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
 
-    <Button
-        android:id="@+id/manage_reviews"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reviews"
-        android:visibility="gone"
-        />
+        <Button
+            android:id="@+id/manage_restaurants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Restaurant"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:id="@+id/manage_reviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reviews"
+            android:visibility="gone"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"
+            />
+    </LinearLayout>
 </LinearLayout>

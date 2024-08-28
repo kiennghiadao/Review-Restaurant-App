@@ -2,84 +2,104 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/hinhnenmobile">
 
-    <EditText
-        android:id="@+id/email_input"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
-        android:layout_marginBottom="8dp" />
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <EditText
+            android:id="@+id/email_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:padding="10dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/rounded_edittext"/>
 
-    <EditText
-        android:id="@+id/password_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:layout_below="@id/email_input"
-        android:layout_marginBottom="8dp" />
+        <EditText
+            android:id="@+id/password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="8dp"
+            android:padding="10dp"
+            android:background="@drawable/rounded_edittext"/>
 
-    <Spinner
-        android:id="@+id/role_spinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/password_input"
-        android:layout_marginBottom="16dp" />
+        <Spinner
+            android:id="@+id/role_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textAlignment="center" />
 
-    <Button
-        android:id="@+id/add_user_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add users"
-        android:layout_below="@+id/role_spinner"
-        android:layout_alignParentStart="true" />
+        <Button
+            android:id="@+id/add_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add users"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            />
 
-    <Button
-        android:id="@+id/edit_user_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit users"
-        android:layout_below="@id/delete_user_button"
-        />
+        <Button
+            android:id="@+id/edit_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit users"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            />
 
-    <Button
-        android:id="@+id/delete_user_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete User"
-        android:layout_below="@id/add_user_button"
-        />
+        <Button
+            android:id="@+id/delete_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete User"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            />
 
-    <Button
-        android:id="@+id/view_user_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show User List"
-        android:layout_below="@+id/role_spinner"
-        android:layout_alignParentEnd="true" />
+        <Button
+            android:id="@+id/view_user_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show User List"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            />
 
-    <Button
-        android:id="@+id/request_password_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show Reset Password List"
-        android:layout_below="@id/view_user_button"
-        android:layout_alignParentEnd="true" />
+        <Button
+            android:id="@+id/request_password_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Show Reset Password List"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            />
 
-    <!-- ListView for managing users -->
-    <ListView
-        android:id="@+id/users_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/edit_user_button"
-        android:layout_marginTop="16dp" />
+        <!-- ListView for managing users -->
+        <ListView
+            android:id="@+id/users_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
 
-    <!-- ListView for password reset requests -->
-    <ListView
-        android:id="@+id/requests_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/users_list_view"
-        android:layout_marginTop="16dp" />
+        <!-- ListView for password reset requests -->
+        <ListView
+            android:id="@+id/requests_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+    </LinearLayout>
 </RelativeLayout>

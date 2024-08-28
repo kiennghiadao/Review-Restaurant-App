@@ -6,26 +6,37 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/select_restaurant_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Select Restaurants to Add to Category"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/restaurant_recycler_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:clipToPadding="false"/>
-
-    <Button
-        android:id="@+id/add_selected_restaurants_button"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="Add Selected Restaurants"/>
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <TextView
+            android:id="@+id/select_restaurant_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Restaurants to Add to Category"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold"/>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/restaurant_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"/>
+
+        <Button
+            android:id="@+id/add_selected_restaurants_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Add Selected Restaurants"
+            android:layout_marginTop="5dp"
+            android:textStyle="bold"
+            android:backgroundTint="@android:color/holo_orange_dark"/>
+    </LinearLayout>
 </LinearLayout>

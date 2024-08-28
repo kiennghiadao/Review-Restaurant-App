@@ -3,34 +3,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
-
-    <LinearLayout
-        android:id="@+id/commentsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical" />
+    android:padding="16dp"
+    android:background="@drawable/hinhnenmobile">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <LinearLayout
+            android:id="@+id/commentsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical" />
 
-        <Button
-            android:id="@+id/btnDeleteComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Delete Review"
-            android:visibility="gone"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
 
-        <Button
-            android:id="@+id/btnStatistic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Show statistics"
-            android:layout_marginStart="16dp" />
+                <Button
+                    android:id="@+id/btnDeleteComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Delete Review"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:backgroundTint="@android:color/holo_orange_dark"
+                    android:textStyle="bold"/>
 
+                <Button
+                    android:id="@+id/btnStatistic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show statistics"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginStart="16dp"
+                    android:backgroundTint="@android:color/holo_orange_dark"
+                    android:textStyle="bold"/>
+            </LinearLayout>
     </LinearLayout>
 </LinearLayout>

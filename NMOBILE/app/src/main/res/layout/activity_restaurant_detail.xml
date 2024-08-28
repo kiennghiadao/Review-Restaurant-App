@@ -3,107 +3,125 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/hinhnenmobile">
 
-    <ImageView
-        android:id="@+id/imageViewDetail"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"/>
-
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"/>
-
-    <TextView
-        android:id="@+id/textViewLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/textViewType"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
-
-    <TextView
-        android:id="@+id/textViewDetails"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
-
-    <RatingBar
-        android:id="@+id/ratingBarDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:isIndicator="true"/>
-
-    <Button
-        android:id="@+id/buttonAddComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Leave a review?"
-        android:textSize="16sp"/>
-
-    <!-- Container cho các bình luận -->
     <LinearLayout
-        android:id="@+id/commentsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="8dp">
-        <!-- Các comment sẽ được thêm vào đây -->
-    </LinearLayout>
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <ImageView
+            android:id="@+id/imageViewDetail"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"/>
 
-    <!-- Layout cho việc thêm bình luận -->
-    <LinearLayout
-        android:id="@+id/addCommentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:visibility="gone"> <!-- Ẩn khi không cần thiết -->
-
-        <RatingBar
-            android:id="@+id/commentRatingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="5"
-            android:stepSize="0.5"
-            android:rating="0"/>
-
-        <EditText
-            android:id="@+id/editTextComment"
+        <TextView
+            android:id="@+id/textViewName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your comment"
-            android:padding="8dp"/>
+            android:textSize="24sp"
+            android:textStyle="bold"/>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/textViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <RatingBar
+            android:id="@+id/ratingBarDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:isIndicator="true"/>
+
+        <Button
+            android:id="@+id/buttonAddComment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Leave a review?"
+            android:textSize="16sp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
+
+        <!-- Container cho các bình luận -->
+        <LinearLayout
+            android:id="@+id/commentsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:paddingTop="8dp">
+            <!-- Các comment sẽ được thêm vào đây -->
+        </LinearLayout>
 
-            <Button
-                android:id="@+id/buttonSubmitComment"
+        <!-- Layout cho việc thêm bình luận -->
+        <LinearLayout
+            android:id="@+id/addCommentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            android:visibility="gone"> <!-- Ẩn khi không cần thiết -->
+
+            <RatingBar
+                android:id="@+id/commentRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Submit"
-                android:padding="8dp"/>
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:rating="0"/>
 
-            <Button
-                android:id="@+id/buttonCancelComment"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/editTextComment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Cancel"
+                android:hint="Enter your comment"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"/>
+                android:textStyle="bold"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="8dp">
+
+                <Button
+                    android:id="@+id/buttonSubmitComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Submit"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@android:color/holo_orange_dark"/>
+
+                <Button
+                    android:id="@+id/buttonCancelComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancel"
+                    android:padding="8dp"
+                    android:layout_marginStart="8dp"
+                    android:textStyle="bold"
+                    android:backgroundTint="@android:color/holo_orange_dark"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
 </LinearLayout>

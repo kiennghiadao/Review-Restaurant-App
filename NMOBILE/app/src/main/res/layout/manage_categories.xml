@@ -3,40 +3,66 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/hinhnenmobile">
 
-    <EditText
-        android:id="@+id/category_name_input"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tên danh mục" />
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_background">
+        <EditText
+            android:id="@+id/category_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Or Select Category Name..."
+            android:textStyle="bold"
+            android:padding="10dp"
+            android:background="@drawable/rounded_edittext"/>
 
-    <Button
-        android:id="@+id/add_category_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thêm danh mục" />
+        <Button
+            android:id="@+id/add_category_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Category"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/update_category_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Cập nhật danh mục" />
+        <Button
+            android:id="@+id/update_category_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Category"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/delete_category_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Xóa danh mục" />
+        <Button
+            android:id="@+id/delete_category_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete Category"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <Button
-        android:id="@+id/add_restaurant_to_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thêm nhà hàng vào danh mục"/>
+        <Button
+            android:id="@+id/add_restaurant_to_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Restaurant To Category"
+            android:padding="10dp"
+            android:backgroundTint="@android:color/holo_orange_dark"
+            android:textStyle="bold"/>
 
-    <ListView
-        android:id="@+id/categories_list_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ListView
+            android:layout_marginTop="10dp"
+            android:id="@+id/categories_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
