@@ -6,4 +6,10 @@
         <item>@string/role_admin</item>
         <item>@string/role_user</item>
     </string-array>
+    <string name="no_reviews_found">No reviews found.</string>
+    <string name="review_text">Restaurant: %1$s\nRating: %2$.1f\nComment: %3$s</string>
+    <string name="no_comments_found">No comments available for this restaurant.</string>
+    <string name="good_reviews">Good Reviews</string>
+    <string name="bad_reviews">Bad Reviews</string>
+    <string name="no_comment_provided">No comment provided</string>
 </resources>

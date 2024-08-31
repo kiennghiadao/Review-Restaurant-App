@@ -30,25 +30,34 @@ public class ReviewHistory extends AppCompatActivity {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
-        int userId = userSessionManager.getUserId();// Lấy ID người dùng từ phiên làm việc
+        int userId = userSessionManager.getUserId(); // Lấy ID người dùng từ phiên làm việc
         // Truy vấn SQL để lấy đánh giá của người dùng
         String query = "SELECT comments.content, restaurants.name, comments.rating FROM comments " +
                 "INNER JOIN restaurants ON comments.restaurant_id = restaurants.restaurant_id " +
                 "WHERE comments.user_id = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)});// Thực hiện truy vấn
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(userId)}); // Thực hiện truy vấn
 
-        if (cursor.getCount() == 0) {// Kiểm tra nếu không có đánh giá
-            Toast.makeText(this, "No reviews found.", Toast.LENGTH_SHORT).show();
+        if (cursor.getCount() == 0) { // Kiểm tra nếu không có đánh giá
+            Toast.makeText(this, R.string.no_reviews_found, Toast.LENGTH_SHORT).show();
         }
 
-        while (cursor.moveToNext()) {// Lặp qua các kết quả
+        while (cursor.moveToNext()) { // Lặp qua các kết quả
             String comment = cursor.getString(cursor.getColumnIndex("content"));
             String restaurantName = cursor.getString(cursor.getColumnIndex("name"));
             float rating = cursor.getFloat(cursor.getColumnIndex("rating"));
+
             // Tạo đối tượng TextView để hiển thị đánh giá
             TextView reviewTextView = new TextView(this);
-            // Thiết lập nội dung
-            reviewTextView.setText("Restaurant: " + restaurantName + "\nRating: " + rating + "\nComment: " + comment);
+
+            // Thiết lập nội dung cho TextView
+            String reviewText;
+            if (comment != null && !comment.isEmpty()) {
+                reviewText = getString(R.string.review_text, restaurantName, rating, comment);
+            } else {
+                reviewText = getString(R.string.review_text, restaurantName, rating, getString(R.string.no_comment_provided));
+            }
+            reviewTextView.setText(reviewText);
+
             // Đặt khoảng đệm cho TextView
             reviewTextView.setPadding(8, 8, 8, 8);
             // Thêm TextView vào LinearLayout

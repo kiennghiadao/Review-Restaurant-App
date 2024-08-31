@@ -72,19 +72,18 @@ public class RestaurantDetailActivity extends AppCompatActivity {
         submitCommentButton.setOnClickListener(v -> {
             // Lấy nội dung bình luận
             String comment = commentEditText.getText().toString().trim();
-            float rating = commentRatingBar.getRating();// Lấy điểm đánh giá
-            if (rating > 5.0) {
-                rating = 5.0f;// Giới hạn điểm đánh giá tối đa
-            }
+            float rating = commentRatingBar.getRating(); // Lấy điểm đánh giá
+
             if (!comment.isEmpty() || rating > 0) {
-                saveComment(comment, rating);// Lưu bình luận
+                saveComment(comment, rating); // Lưu bình luận hoặc đánh giá
                 Toast.makeText(RestaurantDetailActivity.this, "Comment added successfully!", Toast.LENGTH_SHORT).show();
-                addCommentLayout.setVisibility(View.GONE);// Ẩn layout thêm bình luận
+                addCommentLayout.setVisibility(View.GONE); // Ẩn layout thêm bình luận
                 loadComments(restaurantId); // Làm mới danh sách bình luận ngay lập tức
             } else {
                 Toast.makeText(RestaurantDetailActivity.this, "Please enter a comment or a rating.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         // Thêm sự kiện cho nút hủy bình luận
         cancelCommentButton.setOnClickListener(v -> {
@@ -139,30 +138,46 @@ public class RestaurantDetailActivity extends AppCompatActivity {
             String userName = cursor.getString(cursor.getColumnIndex("email"));
 
             // Tạo TextView để hiển thị bình luận
-            TextView commentTextView = new TextView(this);
-            commentTextView.setText(userName + ": " + comment);
-            commentTextView.setPadding(8, 8, 8, 8);
+            if (comment != null && !comment.isEmpty()) {
+                TextView commentTextView = new TextView(this);
+                commentTextView.setText(userName + ": " + comment);
+                commentTextView.setPadding(8, 8, 8, 8);
 
-            commentsContainer.addView(commentTextView);// Thêm bình luận vào container
+                commentsContainer.addView(commentTextView); // Thêm bình luận vào container
+            }
         }
         cursor.close();
     }
 
     private void saveComment(String comment, float rating) {
         DatabaseHelper dbHelper = new DatabaseHelper(this);
-        SQLiteDatabase db = dbHelper.getWritableDatabase();// Mở cơ sở dữ liệu ở chế độ ghi
+        SQLiteDatabase db = dbHelper.getWritableDatabase(); // Mở cơ sở dữ liệu ở chế độ ghi
 
-        int userId = userSessionManager.getUserId();// Lấy ID người dùng từ phiên làm việc
+        int userId = userSessionManager.getUserId(); // Lấy ID người dùng từ phiên làm việc
+
         // Tạo ContentValues để lưu trữ dữ liệu bình luận
         ContentValues values = new ContentValues();
         values.put(DatabaseHelper.COLUMN_REVIEW_RESTAURANT_ID, restaurantId);
-        values.put(DatabaseHelper.COLUMN_CONTENT, comment);
         values.put(DatabaseHelper.COLUMN_COMMENT_USER_ID, userId);
-        values.put(DatabaseHelper.COLUMN_RATING, rating);
 
-        db.insert(DatabaseHelper.TABLE_COMMENTS, null, values);// Chèn bình luận vào cơ sở dữ liệu
+        // Nếu comment không rỗng, thêm vào ContentValues
+        if (!comment.isEmpty()) {
+            values.put(DatabaseHelper.COLUMN_CONTENT, comment);
+        }
 
-        updateRestaurantRating();// Cập nhật điểm đánh giá cho nhà hàng
+        // Nếu rating lớn hơn 0, thêm vào ContentValues
+        if (rating > 0) {
+            values.put(DatabaseHelper.COLUMN_RATING, rating);
+        }
+
+        // Kiểm tra kích thước của ContentValues để xác định có thêm dữ liệu không
+        if (values.size() > 2) { // Đoạn này kiểm tra nếu ContentValues có thêm dữ liệu ngoài ID và user ID
+            db.insert(DatabaseHelper.TABLE_COMMENTS, null, values);
+            // Nếu có rating, cập nhật lại điểm đánh giá của nhà hàng
+            if (rating > 0) {
+                updateRestaurantRating();
+            }
+        }
 
         db.close();
     }

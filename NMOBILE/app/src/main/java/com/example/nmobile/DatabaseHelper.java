@@ -35,7 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Bảng reviews
     private static final String TABLE_REVIEWS = "reviews";
     private static final String COLUMN_REVIEW_ID = "review_id";
-    private static final String COLUMN_REVIEW_USER_ID = "user_id";
+    public static final String COLUMN_REVIEW_USER_ID = "user_id";
     public static final String COLUMN_REVIEW_RESTAURANT_ID = "restaurant_id";
     private static final String COLUMN_REVIEW_RATING = "rating";
     private static final String COLUMN_COMMENTS = "comments";
@@ -279,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Tìm kiếm nhà hàng
         return db.query(TABLE_RESTAURANTS, null, COLUMN_RESTAURANT_NAME + " LIKE ?", selectionArgs, null, null, null);
     }
-
+    //Lấy tất cả danh mục
     public Cursor getAllCategories() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.query(
@@ -292,7 +292,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null
         ); // Lấy danh sách danh mục
     }
-
+    //Thêm danh mục
     public boolean addCategory(String categoryName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -301,7 +301,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(TABLE_CATEGORIES, null, values);
         return result != -1;
     }
-
+    //Edit danh mục
     public boolean updateCategory(long categoryId, String newCategoryName) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -310,13 +310,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int result = db.update(TABLE_CATEGORIES, values, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
         return result > 0;
     }
-
+    //Xóa danh mục
     public boolean deleteCategory(long categoryId) {
         SQLiteDatabase db = this.getWritableDatabase();
         int result = db.delete(TABLE_CATEGORIES, COLUMN_CATEGORY_ID + "=?", new String[]{String.valueOf(categoryId)});
         return result > 0;
     }
-
+    //Thêm nhà hàng vào danh mục
     public boolean addRestaurantToCategory(long categoryId, long restaurantId) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -327,7 +327,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return result != -1;
     }
-
+    //Lấy nhà hàng theo danh mục
     public Cursor getRestaurantsByCategory(long categoryId) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query;

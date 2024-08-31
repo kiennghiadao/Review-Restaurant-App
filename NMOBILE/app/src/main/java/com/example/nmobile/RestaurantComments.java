@@ -55,28 +55,39 @@ public class RestaurantComments extends AppCompatActivity {
                 "WHERE comments.restaurant_id = ?";
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(restaurantId)});
 
+        if (cursor.getCount() == 0) {
+            // Nếu không có bình luận, hiển thị thông báo
+            TextView noCommentsTextView = new TextView(this);
+            noCommentsTextView.setText(R.string.no_comments_found);
+            noCommentsTextView.setPadding(8, 8, 8, 8);
+            commentsContainer.addView(noCommentsTextView);
+        }
+
         while (cursor.moveToNext()) {
             String commentId = cursor.getString(cursor.getColumnIndex("comment_id"));
             String comment = cursor.getString(cursor.getColumnIndex("content"));
             String userName = cursor.getString(cursor.getColumnIndex("email"));
             float rating = cursor.getFloat(cursor.getColumnIndex("rating"));
+
             // Tạo một TextView mới để hiển thị bình luận
             TextView commentTextView = new TextView(this);
-            // Đặt văn bản cho TextView
-            commentTextView.setText(userName + ": " + comment + " (" + rating + " Stars)");
-            // Thiết lập độ đệm cho TextView
+            commentTextView.setText(userName + ": " + (comment != null ? comment : getString(R.string.no_comment_provided)) + " (" + rating + " Stars)");
             commentTextView.setPadding(8, 8, 8, 8);
+
             // Thiết lập sự kiện click cho bình luận
             commentTextView.setOnClickListener(v -> {
-                selectedCommentId = commentId;// Ghi nhớ ID bình luận đã chọn
-                deleteButton.setVisibility(View.VISIBLE);// Hiện nút xóa
+                selectedCommentId = commentId; // Ghi nhớ ID bình luận đã chọn
+                deleteButton.setVisibility(View.VISIBLE); // Hiện nút xóa
                 highlightSelectedComment(v); // Đánh dấu comment đã chọn
             });
+
             // Thêm bình luận vào commentsContainer
             commentsContainer.addView(commentTextView);
         }
+
         cursor.close();
     }
+
     // Phương thức hiển thị hộp thoại xác nhận xóa bình luận
     private void showDeleteConfirmationDialog() {
         if (selectedCommentId != null) {
@@ -110,7 +121,7 @@ public class RestaurantComments extends AppCompatActivity {
     }
     // Phương thức hiển thị thống kê
     private void showStatistics() {
-        commentsContainer.removeAllViews();// Xóa tất cả các view cũ
+        commentsContainer.removeAllViews(); // Xóa tất cả các view cũ
         DatabaseHelper dbHelper = new DatabaseHelper(this);
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -118,48 +129,45 @@ public class RestaurantComments extends AppCompatActivity {
                 "FROM comments " +
                 "INNER JOIN users ON comments.user_id = users.id " +
                 "WHERE comments.restaurant_id = ?";
-        // Thực hiện truy vấn
         Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(restaurantId)});
 
-        // Tạo layout cho bình luận tốt
         LinearLayout goodComments = new LinearLayout(this);
-        goodComments.setOrientation(LinearLayout.VERTICAL);// Đặt chiều dọc
+        goodComments.setOrientation(LinearLayout.VERTICAL);
 
-        TextView goodHeader = new TextView(this);// Tiêu đề
-        goodHeader.setText("Good Reviews");
+        TextView goodHeader = new TextView(this);
+        goodHeader.setText(R.string.good_reviews);
         goodHeader.setTextSize(20);
         goodHeader.setTextColor(Color.BLUE);
         goodHeader.setPadding(8, 8, 8, 8);
-        goodComments.addView(goodHeader); //Thêm tiêu đề vào layout
+        goodComments.addView(goodHeader);
 
         LinearLayout badComments = new LinearLayout(this);
         badComments.setOrientation(LinearLayout.VERTICAL);
 
         TextView badHeader = new TextView(this);
-        badHeader.setText("Bad Reviews");
+        badHeader.setText(R.string.bad_reviews);
         badHeader.setTextSize(20);
         badHeader.setTextColor(Color.RED);
         badHeader.setPadding(8, 8, 8, 8);
         badComments.addView(badHeader);
 
-        // Duyệt qua các bình luận và phân loại chúng
         while (cursor.moveToNext()) {
             String comment = cursor.getString(cursor.getColumnIndex("content"));
             String userName = cursor.getString(cursor.getColumnIndex("email"));
             float rating = cursor.getFloat(cursor.getColumnIndex("rating"));
-            // Tạo một TextView mới để hiển thị bình luận
+
             TextView commentTextView = new TextView(this);
-            commentTextView.setText(userName + ": " + comment + " (" + rating + " stars)");
+            commentTextView.setText(userName + ": " + (comment != null ? comment : getString(R.string.no_comment_provided)) + " (" + rating + " stars)");
             commentTextView.setPadding(8, 8, 8, 8);
-            // Phân loại bình luận vào layout tương ứng
+
             if (rating >= 3) {
                 goodComments.addView(commentTextView); // Thêm vào bình luận tốt
             } else {
-                badComments.addView(commentTextView);// Thêm vào bình luận xấu
+                badComments.addView(commentTextView); // Thêm vào bình luận xấu
             }
         }
+
         cursor.close();
-        // Thêm các layout bình luận tốt và xấu vào commentsContainer
         commentsContainer.addView(goodComments);
         commentsContainer.addView(badComments);
     }
