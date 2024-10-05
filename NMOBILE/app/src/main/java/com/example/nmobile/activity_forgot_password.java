@@ -48,7 +48,7 @@ public class activity_forgot_password extends AppCompatActivity {
                             Toast.makeText(activity_forgot_password.this, "Error sending password reset request!", Toast.LENGTH_SHORT).show();
                         }
                     } else {
-                        Toast.makeText(activity_forgot_password.this, "Email does not exist in the system!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_forgot_password.this, "User does not exist in the system!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

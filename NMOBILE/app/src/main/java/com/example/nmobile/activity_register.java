@@ -52,7 +52,7 @@ public class activity_register extends AppCompatActivity {
                     Toast.makeText(activity_register.this, "Password and password confirmation must match!", Toast.LENGTH_SHORT).show();
                 } else {
                     if(dbHelper.checkUser(email)) {
-                        Toast.makeText(activity_register.this, "Email already exists!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_register.this, "User already exists!", Toast.LENGTH_SHORT).show();
                     } else {
                         // Thêm người dùng vào cơ sở dữ liệu
                         boolean result = dbHelper.addUser(email, password, role);

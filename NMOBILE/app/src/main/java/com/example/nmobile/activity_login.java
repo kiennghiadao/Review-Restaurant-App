@@ -60,7 +60,7 @@ public class activity_login extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     } else {
-                        Toast.makeText(activity_login.this, "Email or password is incorrect!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity_login.this, "User or password is incorrect!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
